@@ -1,0 +1,319 @@
+body {
+background:#4386CE url(http://www.blogblog.com/thisaway_blue/bg_body.gif) repeat-x scroll left top;
+color:#204063;
+font-size:small;
+margin:0pt;
+min-width:760px;
+text-align:center;
+}
+blockquote {
+border-right:6px solid #D8E7F7;
+color:#477FBA;
+margin:0pt;
+padding:0pt 10px;
+}
+code {
+color:#477FBA;
+}
+hr {
+display:none;
+}
+#outer-wrapper {
+font-family:Trebuchet,Trebuchet MS,Arial,sans-serif;
+font-size:100%;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:normal;
+margin:0pt auto;
+text-align:left;
+width:760px;
+}
+#header-wrapper {
+background:transparent url(http://blog.barcelonautes.com/img/bg_header_bottom.png) no-repeat scroll left bottom;
+padding-bottom:15px;
+}
+#header {
+background:#F8C301 url(http://blog.barcelonautes.com/img/bg_header.png) repeat-x scroll left bottom;
+}
+#content-wrapper {
+background:#A73556 url(http://blog.barcelonautes.com/img/bg_main_wrapper.png) repeat-y scroll left top;
+position:relative;
+width:760px;
+}
+#main-wrapper {
+display:inline;
+float:left;
+margin:0pt 0pt 0pt 3px;
+overflow:hidden;
+padding:0pt;
+width:483px;
+}
+#main {
+background:transparent url(http://www.blogblog.com/thisaway_blue/bg_content.gif) repeat-x scroll left top;
+padding:22px 8px 0pt;
+}
+.post {
+border-bottom:3px solid #D8E7F7;
+margin:0pt 8px 14px 21px;
+padding:0pt;
+}
+#comments {
+background-color:#E4ECF5;
+border:1px solid #CEDEF0;
+margin:0pt 16px 14px 29px;
+padding:10px;
+}
+#sidebar-wrapper {
+<!--background:transparent url(http://www.blogblog.com/thisaway_blue/bg_sidebar.gif) repeat-x scroll left top;-->
+background-color: #152E4A;
+color:#204063;
+display:inline;
+float:right;
+font-size:90%;
+line-height:1.4em;
+margin:0pt 3px 0pt 0pt;
+overflow:hidden;
+width:269px;
+}
+#sidebar {
+background-color:#152E4A;
+padding:7px 11px 0pt 14px;
+}
+#sidebar .widget {
+margin-bottom:20px;
+}
+#footer-wrapper {
+background:transparent url(http://blog.barcelonautes.com/img/bg_footer_top.png) no-repeat scroll left top;
+clear:both;
+padding-top:15px;
+}
+#footer {
+background:#F8C301 url(http://blog.barcelonautes.com/img/bg_footer.png) repeat-x scroll left top;
+min-height:2em;
+text-align:center;
+}
+#header h1 {
+margin:0pt;
+<!--padding:24px 0pt 0pt 84px;-->
+}
+h2.date-header {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_date.gif) no-repeat scroll 13px 0pt;
+color:#8FACC8;
+font-size:80%;
+font-weight:normal;
+margin:0pt;
+padding:0pt 0pt 0pt 29px;
+text-transform:uppercase;
+}
+.date-header span {
+background:transparent url(http://www.blogblog.com/thisaway_blue/bg_date.gif) no-repeat scroll 0pt;
+margin:0pt 0pt 0pt 5px;
+padding:0pt 25px;
+}
+.sidebar h2 {
+color:#D11600;
+font-family:Trebuchet,Trebuchet MS,Arial,sans-serif;
+font-size:132%;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:bold;
+line-height:normal;
+}
+.sidebar .Profile h2 {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_sidebar_profileheading.gif) no-repeat scroll 0pt 45%;
+color:#527595;
+}
+.post h3 {
+color:#477FBA;
+font-size:140%;
+margin:13px 0pt;
+padding:0pt;
+}
+.post h3 a, .post h3 a:visited {
+color:#477FBA;
+}
+#comments h4 {
+font-size:120%;
+margin-top:0pt;
+}
+#header h1 {
+color:#632620;
+font-family:Trebuchet,Trebuchet MS,Arial,sans-serif;
+font-size:198%;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:bold;
+line-height:normal;
+}
+#header .description {
+color:#EEF6FE;
+font-family:Trebuchet,Trebuchet MS,Arial,sans-serif;
+font-size:80%;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:normal;
+margin:0pt;
+padding:7px 16px 0pt 84px;
+}
+.post-body p {
+height:1%;
+line-height:1.4em;
+margin:0pt;
+overflow:visible;
+}
+.post-footer {
+color:#8FACC8;
+font-size:80%;
+}
+.uncustomized-post-template .post-footer {
+text-align:right;
+}
+.uncustomized-post-template .post-footer .post-author, .uncustomized-post-template .post-footer .post-timestamp {
+display:block;
+float:left;
+margin-right:4px;
+text-align:left;
+}
+p.comment-author {
+font-size:83%;
+}
+.deleted-comment {
+color:gray;
+font-style:italic;
+}
+.comment-body p {
+line-height:1.4em;
+}
+.feed-links {
+clear:both;
+line-height:2.5em;
+margin-bottom:0.5em;
+margin-left:29px;
+}
+#footer .widget {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_footer.gif) no-repeat scroll 16px 0pt;
+color:#FEF6EE;
+font-size:90%;
+line-height:1.4em;
+margin:0pt;
+padding:0pt 0pt 15px 55px;
+}
+.post ul {
+line-height:1.4em;
+list-style-type:none;
+padding-left:32px;
+}
+.post li {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_list_item.gif) no-repeat scroll 0pt 3px;
+padding:0pt 0pt 4px 17px;
+}
+#comments ul {
+list-style-type:none;
+margin:0pt;
+padding:0pt;
+}
+#comments li {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_comment.gif) no-repeat scroll 0pt 3px;
+padding:0pt 0pt 1px 17px;
+}
+.sidebar ul {
+line-height:1.2em;
+list-style-type:none;
+margin-left:0pt;
+padding:0pt;
+}
+.sidebar li {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_list_item.gif) no-repeat scroll 0pt 3px;
+padding:0pt 0pt 4px 17px;
+}
+#blog-pager-newer-link {
+float:left;
+margin-left:29px;
+}
+#blog-pager-older-link {
+float:right;
+margin-right:16px;
+}
+#blog-pager {
+text-align:center;
+}
+a {
+color:#4386CE;
+font-weight:bold;
+text-decoration:none;
+}
+a:hover {
+color:#2462A5;
+}
+a.comment-link {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_comment.gif) no-repeat scroll 0pt 45%;
+padding-left:14px;
+}
+html > body a.comment-link {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_comment.gif) no-repeat scroll 0pt 45%;
+padding-left:14px;
+}
+.sidebar a {
+color:#F8C301;
+text-decoration:none;
+}
+.sidebar a:hover {
+color:#E1771E;
+text-decoration:none;
+}
+#header table h1 a {
+color:#632620;
+text-decoration:none;
+}
+#header table h1 a:hover {
+color:#B4C7D9;
+}
+
+.post h3 a {
+text-decoration:none;
+}
+a img {
+border-width:0pt;
+}
+.clear {
+clear:both;
+height:0pt;
+line-height:0pt;
+}
+.profile-textblock {
+clear:both;
+margin-bottom:10px;
+margin-left:0pt;
+}
+.profile-img {
+border:1px solid #BDD4EB;
+float:left;
+margin:0pt 5px 5px 0pt;
+padding:3px;
+}
+.profile-link {
+background:transparent url(http://www.blogblog.com/thisaway_blue/icon_profile.gif) no-repeat scroll 0pt;
+padding:0pt 0pt 0pt 17px;
+}
+.widget-content {
+color:#809FBD;
+}
+body#layout #main, body#layout #sidebar {
+padding:0pt;
+}
+
+.imgLogo  {
+padding-left: 60px ;
+padding-right: 10px;
+}
+

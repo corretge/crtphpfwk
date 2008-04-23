@@ -15,7 +15,6 @@
  * Definim una classe per als elements HTML.
  * 
  * Contindrà mètodes i propietats comunes a tots els elements HTML.
- *
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
  * @version 1.0
@@ -93,7 +92,12 @@ class crtmlBODYelement
 	 */
 	function setTitle($Title)
 	{
-		$this->Title = htmlentities($Title, ENT_COMPAT);
+		/**
+		 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		 * emprarem htmlentities doncs no funciona correctament.
+		 * $this->Title = htmlentities($Title, ENT_COMPAT);
+		 */		
+		$this->Title = $Title;
 	}
 
 	/**
@@ -315,7 +319,12 @@ class crtmlP extends crtmlBODYelement
 	 */
 	function setText($Text)
 	{
-		//$this->Text = htmlentities($Text, ENT_COMPAT);
+	
+		/**
+   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		 * emprarem htmlentities doncs no funciona correctament.
+		 * $this->Text = htmlentities($Text, ENT_COMPAT);
+		 */
 		$this->Text = $Text;
 	}
 
@@ -505,8 +514,12 @@ class crtmlIMG extends crtmlBODYelement
 	function setAlt($Alt)
 	{
 		
-		
-		$this->Alt = htmlentities($Alt, ENT_COMPAT);
+		/**
+   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		 * emprarem htmlentities doncs no funciona correctament.
+		 *	$this->Alt = htmlentities($Alt, ENT_COMPAT);
+		 */
+		$this->Alt = $Alt;
 		
 		/**
 		 * Si no han especificat Title, li passem l'Alt.
@@ -794,11 +807,21 @@ class crtmlA extends crtmlBODYelement
 	{
 		if (isset($Title))
 		{
-			$this->Title = htmlentities($Title, ENT_COMPAT);
+		/**
+   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		 * emprarem htmlentities doncs no funciona correctament.
+		 * $this->Title = htmlentities($Title, ENT_COMPAT);
+		 */
+			$this->Title = $Title;
 		}
 		else 
 		{
-			$this->Title = htmlentities($this->Text, ENT_COMPAT);
+		/**
+   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		 * emprarem htmlentities doncs no funciona correctament.
+		 * $this->Title = htmlentities($this->Text, ENT_COMPAT);
+		 */
+			$this->Title = $this->Text;
 		}
 		
 	}
@@ -2562,7 +2585,11 @@ class crtmlDIV extends crtmlBODYelement
 	 */
 	function setText($Text)
 	{
-		//$this->Text = htmlentities($Text, ENT_COMPAT);
+		/**
+   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		 * emprarem htmlentities doncs no funciona correctament.
+		 * $this->Text = htmlentities($Text, ENT_COMPAT);
+		 */
 		$this->Continguts = Array();
 		$this->Continguts[] = $Text;
 	}

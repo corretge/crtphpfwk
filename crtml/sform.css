@@ -1,0 +1,37 @@
+@CHARSET "UTF-8";
+
+form { 
+	background-color: Ivory;
+	padding: 4px;
+	width: 480px;
+	font-family: Arial, Helvetica, SansSerif;
+}
+
+form fieldset {
+	border: 0px;
+}
+
+form fieldset legend {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+form fieldset label {
+	display: block;
+	margin-bottom: 12px;
+	width: 160px;
+	text-align: right;
+}
+
+form fieldset input, form fieldset textarea {
+	position: absolute;
+	left: 200px;
+	font-family: 'Lucida Console', monospace;
+}
+
+.butonera {
+	text-align: right;
+}
+
+	
+

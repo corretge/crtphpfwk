@@ -27,7 +27,7 @@ class sform
 			$this->id = $id;
 		}
 		
-		$this->form = new crtmlFORM('');
+		$this->form = new crtmlFORM('', 'POST');
 		$this->form->setId($id);
 		
 		

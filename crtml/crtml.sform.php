@@ -16,7 +16,7 @@ class sform
 	protected $fldset;
 	protected $butonera;
 	
-	public function __construct($titol, $id = 'UNIQUEID')
+	public function __construct($titol, $id)
 	{
 		if ($id = 'UNIQUEID')
 		{
@@ -28,7 +28,7 @@ class sform
 		}
 		
 		$this->form = new crtmlFORM('', 'POST');
-		$this->form->setId($id);
+		$this->form->setId($this->id);
 		
 		
 		$this->fldset = new crtmlFIELDSET(new crtmlLEGEND($titol));

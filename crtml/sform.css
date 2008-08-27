@@ -29,8 +29,11 @@ form fieldset label {
 }
 
 form fieldset input, form fieldset textarea {
-	position: absolute;
-	left: 200px;
+	/** position: absolute; */
+	position: relative;
+	left: 170px;
+	top: -16px;
+	
 	font-family: 'Lucida Console', monospace;
 	background-color: LightYellow;
 }

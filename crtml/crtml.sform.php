@@ -47,12 +47,17 @@ class sform
 		$this->fldset->addContingut($lb);
 	}
 	
-	public function addButton($label, $action)
+	public function addSimpleButton($label, $action)
 	{
 		$btn = new crtmlINPUT($label);
 		$btn->setType('Submit');
 		$this->butonera->addContingut($btn);
 	}
+
+	public function addButton($button)
+	{
+		$this->butonera->addContingut($button);
+	}	
 	
 	public function Render()
 	{

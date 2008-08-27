@@ -18,7 +18,7 @@ class sform
 	
 	public function __construct($titol, $id)
 	{
-		if ($id = 'UNIQUEID')
+		if ($id == 'UNIQUEID')
 		{
 			$this->id = uniqid('crtml');
 		}

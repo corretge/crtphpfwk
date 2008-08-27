@@ -2945,7 +2945,7 @@ class crtmlSTYLE
 	public function Render()
 	{
 
-		$return .= "<STYLE";
+		$return = "<STYLE";
 		
 		/**
 		 * Si han indicat type

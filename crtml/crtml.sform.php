@@ -60,5 +60,11 @@ class sform
 		$this->form->addContingut($this->butonera);
 		return $this->form->Render();
 	}
+	
+	public function renderScript()
+	{
+		return "";	
+	}
+	
 }
 ?>

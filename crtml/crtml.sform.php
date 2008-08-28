@@ -59,10 +59,20 @@ class sform
 		$this->butonera->addContingut($button);
 	}	
 	
+	public function add2Form($object)
+	{
+		$this->form->addContingut($object);
+	}
+	
+	public function add2Fieldset($object)
+	{
+		$this->fldset->addContingut($object);
+	}
+	
 	public function Render()
 	{
-		$this->form->addContingut($this->fldset);
-		$this->form->addContingut($this->butonera);
+		$this->add2Form($this->fldset);
+		$this->add2Form($this->butonera);
 		return $this->form->Render();
 	}
 	
@@ -72,4 +82,15 @@ class sform
 	}
 	
 }
+
+
+/**
+ * classe que crearà el formulari dins una taula amb
+ * les etiquetes a una banda i els camps a un altra.
+ */
+class sFormTable extends sform
+{
+	
+}
+
 ?>

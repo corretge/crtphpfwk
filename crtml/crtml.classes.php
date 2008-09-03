@@ -2242,7 +2242,18 @@ class crtmlINPUT extends crtmlBODYelement
 	 */
 	function setReadOnly($ReadOnly)
 	{
-		$this->ReadOnly = $ReadOnly;
+		/**
+		 * En el cas de que es passi el paràmetre
+		 * true, indiquem el text.
+		 */
+		if ($ReadOnly === true)
+		{
+				$this->ReadOnly = "READONLY";
+		}
+		else
+		{
+			$this->ReadOnly = $ReadOnly;
+		}
 	}
 	
 	/**

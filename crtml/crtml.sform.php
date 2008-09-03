@@ -36,15 +36,29 @@ class sform
 		$this->butonera = new crtmlDIV('butonera','','butonera');
 		
 	}
-	
-	public function addInput($label, $field, $type, $value)
+
+	/**
+	 * Afegim un camp amb la seva etiqueta al formulari
+	 * 
+	 * @param string $label
+	 * @param string $field
+	 * @param string $type
+	 * @param string $value
+	 * @param string $tabIndex
+	 */
+	public function addInput($label, $field, $type, $value, $tabIndex = null)
 	{
 		$lb = new crtmlLABEL($label);
 		$fld = new crtmlINPUT($field);
 		$fld->setValue($value);
 		$fld->setType($type);
+		if (isset($tabIndex))
+		{
+			$fld->setTabIndex($tabIndex);
+		}		
 		$lb->addContingut($fld);
 		$this->fldset->addContingut($lb);
+
 	}
 	
 	public function addSimpleButton($label, $action)

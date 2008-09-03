@@ -1106,6 +1106,12 @@ class crtmlLEGEND extends crtmlBODYelement
 	{
 		$this->Text = $Text;
 	}
+	
+	function getText()
+	{
+		return $this->Text;
+	}
+	
 	/**
 	 * Establim AccessKey
 	 *
@@ -1213,6 +1219,15 @@ class crtmlFIELDSET extends crtmlBODYelement
 		}
 	}
 	
+	function getLegend()
+	{
+		return $this->Legend->getText();
+	}
+	
+	function getContinguts()
+	{
+		return $this->Continguts;
+	}
 	/**
 	 * Afegim un contingut, objecte crtml
 	 *
@@ -2249,6 +2264,11 @@ class crtmlINPUT extends crtmlBODYelement
 		if ($ReadOnly === true)
 		{
 				$this->ReadOnly = "READONLY";
+				/**
+				 * Afegim un event per a que
+				 * sigui realment READONLY
+				 */
+				$this->addEvent('onfocus', 'this.blur();');
 		}
 		else
 		{
@@ -2451,6 +2471,7 @@ class crtmlLABEL extends crtmlBODYelement
 	protected $For;
 	protected $AccessKey;
 	protected $Continguts;
+	protected $Label;
 	
 	/**
 	 * Constructor amb un contingut
@@ -2466,6 +2487,7 @@ class crtmlLABEL extends crtmlBODYelement
 		$this->Events['onfocus'] = "";
 		$this->Events['onblur'] = "";
 		
+		$this->Label = $Contingut;
 		
 		$this->addContingut($Contingut);
 
@@ -2481,7 +2503,17 @@ class crtmlLABEL extends crtmlBODYelement
 	{
 		$this->For = $For;
 	}
+	
+	function getLabel()
+	{
+		return  $this->Label;
+	}
 
+	function getContinguts()
+	{
+		return $this->Continguts;
+		
+	}
 	/**
 	 * Establim AccessKey
 	 *

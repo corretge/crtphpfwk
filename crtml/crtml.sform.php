@@ -90,7 +90,86 @@ class sform
  */
 class sFormTable extends sform
 {
+	public function Render()
+	{
+		/**
+		 * interceptem el contingut del Fieldset i el
+		 * convertim en una taula.
+		 * Ho fem en dues pases per a debug purpose.
+		 */
+		$table = $this->renderFldsetAsTable($this->fldset);
+			
+		$this->add2Form($table);
+		$this->add2Form($this->butonera);
+		return $this->form->Render();
+	}
 	
+	public function renderFldsetAsTable($fldset)
+	{
+		
+		$newFldset = new crtmlFIELDSET($fldset->getLegend());
+		$tdL = Array();
+		$tdF = Array();
+		$tdN = 0;
+		
+		$table = "<table>";
+		
+		$Continguts = $fldset->getContinguts();
+		/**
+		 * Cerquem els label
+		 */
+		foreach ($Continguts as $Contingut) 
+		{
+			/**
+			 * afegim 1 al comptador de línies.
+			 */
+			$tdN ++;
+
+			/**
+			 * només incorporarem el que estigui definit com a
+			 * label
+			 */
+			
+			if (is_object($Contingut) and get_class($Contingut) == 'crtmlLABEL')
+			{
+				$tdL[$tdN] = (string) $Contingut->getLabel();
+				$tdF[$tdN] = "";
+				
+				/**
+				 * Ara incorporem només els objectes que estiguin
+				 * dins el Label, així evitem duplicar l'etiqueta
+				 */
+				$lCon = $Contingut->getContinguts();
+				foreach ($lCon as $Camp) 
+				{
+					if (is_object($Camp))
+					{
+						$tdF[$tdN] .= " " . (string) $Camp->Render();		
+					}
+				}
+			}
+			
+		}
+		
+		/**
+		 * muntem la taula pròpiament dita
+		 */
+		
+		
+		for ($n=1; $n <= $tdN; $n++)
+		{
+			$table .= "<tr>\n";
+			$table .= "<td>" . $tdL[$n] . "</td>\n";
+			$table .= "<td>" . $tdF[$n] . "</td>\n";
+			$table .= "</tr>\n";
+		}
+		
+		$table .= "</table>";
+		
+		$newFldset->addContingut((string) $table);
+		
+		return $newFldset;
+	}
 }
 
 ?>

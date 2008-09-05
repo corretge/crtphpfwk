@@ -50,6 +50,7 @@ class sform
 	{
 		$lb = new crtmlLABEL($label);
 		$fld = new crtmlINPUT($field);
+		$fld->setId($field);
 		$fld->setValue($value);
 		$fld->setType($type);
 		if (isset($tabIndex))

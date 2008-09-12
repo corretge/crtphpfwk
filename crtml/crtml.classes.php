@@ -305,7 +305,7 @@ class crtmlP extends crtmlBODYelement
 	 * @param string $text
 	 * @param string $classe
 	 */
-	function __construct($text, $classe=null) 
+	function __construct($text = null, $classe=null) 
 	{
 		$this->setText($text);
 		$this->setClass($classe);
@@ -2044,19 +2044,21 @@ class crtmlTEXTAREA extends crtmlBODYelement
 		 * Renderitzem els continguts
 		 */
 		$n=0;
-		foreach ($this->Continguts as $Contingut) 
+		if (is_array($this->Continguts))
 		{
-			if (is_object($Contingut))
+			foreach ($this->Continguts as $Contingut) 
 			{
-				$return .= $Contingut->Render();
+				if (is_object($Contingut))
+				{
+					$return .= $Contingut->Render();
+				}
+				else 
+				{
+					$return .= $Contingut;
+				}
+				$n++;
 			}
-			else 
-			{
-				$return .= $Contingut;
-			}
-			$n++;
 		}
-
 		
 		
 		$return .= "</TEXTAREA>\n";

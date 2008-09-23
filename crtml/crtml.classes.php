@@ -1567,9 +1567,14 @@ class crtmlOPTION extends crtmlBODYelement
 	 * @param string $Text
 	 * @return peOPTION
 	 */
-	function __construct($Text)
+	function __construct($Text, $val = null)
 	{
 		$this->setText($Text);
+		
+		if ($val != null)
+		{
+			$this->setValue($val);
+		}
 	}
 
 	/**

@@ -111,13 +111,20 @@ Class xls
     	/**
     	 * Imprimim la capçalera que fa que obri l'excel
     	 */
-		header('Content-type: application/vnd.ms-excel');
-		header("Content-Disposition: attachment; filename=\"{$file}\"");
-		header("Content-Type: application/force-download");
-    	header("Content-Type: application/download");
+		//header('Content-type: application/vnd.ms-excel');
 		
-		header("Pragma: no-cache");
-		header("Expires: 0");
+		header("Content-Disposition: attachment; filename=\"{$file}\"");
+		header('Content-type: application/vnd.ms-excel; charset=utf-8');
+		header("Content-Type: application/force-download");
+		header('Content-Transfer-Encoding: binary');
+    	//header("Content-Type: application/download");
+    	/**
+    	 * Si és un navegador explorer, cal afegir aquestes capçaleres
+    	 */
+		header("Pragma: ");
+		header("Cache-Control: no-store");
+		header("Cache-Control: private");
+		//header("Expires: 0");
 		/**/
 		echo $this->fwrite;
 		

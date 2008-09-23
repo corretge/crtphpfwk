@@ -120,6 +120,14 @@ Class xls
 		
     }
 
+    /**
+     * Retornem el que hi ha a la propietat fwrite
+     */
+    public function getFWrite()
+    {
+    	return $this->fwrite;
+    }
+    
     function GetHeader()
     {
         $lastsav = date("e");

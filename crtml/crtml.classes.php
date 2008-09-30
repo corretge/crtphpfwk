@@ -395,6 +395,8 @@ class crtmlP extends crtmlBODYelement
  * @author Àlex Corretgé <alex@corretge.cat>
  * @version 1.0
  * @package crtml
+ * 
+ * @todo Implementar TABINDEX en aquest element
  */
 class crtmlIMG extends crtmlBODYelement 
 {
@@ -475,6 +477,7 @@ class crtmlIMG extends crtmlBODYelement
 	 */
 	protected $VSpace;
 	
+	protected $TabIndex;
 	
 	/**
 	 * Constructor de la imatge.
@@ -635,6 +638,17 @@ class crtmlIMG extends crtmlBODYelement
 	}
 	
 	/**
+	 * Establim TabIndex
+	 *
+	 * @param string $TabIndex
+	 * @see $TabIndex
+	 */
+	function setTabIndex($TabIndex)
+	{
+		$this->TabIndex = $TabIndex;
+	}
+		
+	/**
 	 * Renderitzem la imatge
 	 *
 	 * @return string
@@ -712,6 +726,14 @@ class crtmlIMG extends crtmlBODYelement
 			$return .= " Width=\"$this->Width\"";
 		}
 				
+			
+		/**
+		 * Si han indicat TabIndex
+		 */
+		if (isset($this->TabIndex))
+		{
+			$return .= " TabIndex=\"$this->TabIndex\"";
+		}
 		
 		$return .= " />\n";
 		

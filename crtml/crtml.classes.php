@@ -3543,7 +3543,66 @@ class crtmlHTML
 		
 		return $return;
 	}
+}
+
+
+/**
+ * Definim l'element IFRAME HTML
+ *
+ *  
+ * @author Àlex Corretgé <alex@corretge.cat>
+ * @version 1.0
+ * @package crtml
+ */
+class crtmlIFRAME extends crtmlBODYelement 
+{
+	protected $src;
 	
+	/**
+	 * Constructor de la classe peIFRAME.
+	 *
+	 * @param string $id
+	 */
+	function __construct($id) 
+	{
+		
+		$this->setId($id);
+		$this->setName($id);
+	}
+	
+
+	/**
+	 * Assignem un valor a $src
+	 *
+	 * @param string $src
+	 */
+	public function set_src($src)
+	{
+			$this->src = $src;
+	}
+		
+	/**
+	 * Renderitzem el text
+	 *
+	 * @return string
+	 */
+	public function Render()
+	{
+		/**
+		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
+		 */
+		$return = "<IFRAME ";
+		
+		$return .= parent::Render();
+		
+		$return .= ">";
+		
+		
+		$return .= "</IFRAME>\n";
+		
+		return $return;
+	}
+
 }
 
 ?>

@@ -37,6 +37,17 @@ class sform
 		
 	}
 
+	public function setAction($act)
+	{
+		$this->form->setAction($act);
+	}
+	
+
+	public function setMethod($method)
+	{
+		$this->form->setMethod($method);
+	}
+	
 	/**
 	 * Afegim un camp amb la seva etiqueta al formulari
 	 * 
@@ -85,7 +96,7 @@ class sform
 	}
 	
 	public function Render()
-	{
+	{	
 		$this->add2Form($this->fldset);
 		$this->add2Form($this->butonera);
 		return $this->form->Render();

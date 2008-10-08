@@ -3558,6 +3558,8 @@ class crtmlIFRAME extends crtmlBODYelement
 {
 	protected $src;
 	
+	protected $Border;
+	
 	/**
 	 * Constructor de la classe peIFRAME.
 	 *
@@ -3571,6 +3573,10 @@ class crtmlIFRAME extends crtmlBODYelement
 	}
 	
 
+	public function setBorder($border)
+	{
+		$this->Border = $border;
+	}
 	/**
 	 * Assignem un valor a $src
 	 *
@@ -3595,6 +3601,15 @@ class crtmlIFRAME extends crtmlBODYelement
 		
 		$return .= parent::Render();
 		
+
+		/**
+		 * Si han indicat Border
+		 */
+		if (isset($this->Border))
+		{
+			$return .= " FrameBorder=\"$this->Border\"";
+		}
+				
 		$return .= ">";
 		
 		

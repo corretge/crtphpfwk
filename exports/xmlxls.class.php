@@ -2,7 +2,8 @@
 /**
  * Classe per a la creació d'arxius Excel 2003/2007
  * 
- * importada del projecte OpenSource Collabtive http://collabtive.o-dyn.de
+ * Especificacions: 
+ * http://msdn.microsoft.com/en-us/library/aa140066.aspx
  *
  */
 Class xmlxls
@@ -234,10 +235,11 @@ class xmlxlsSheet
     /**
      * Imprimim la capçalera i muntem algunes dades generals.
      */
-    public function writeHeadLine(array $line_arr, $dataType = null)
+    public function writeHeadLine(array $line_arr, $dataLen = null, $dataType = null)
     {
 
     	$tmpType = Array();
+    	
     	/**
     	 * si ens envien els tipus, els coloquem
     	 */
@@ -249,10 +251,11 @@ class xmlxlsSheet
     	{
     		$dataType = null;
     	}
+
     	
     	$this->data .= '<Row ss:AutoFitHeight="1">' . "\n";
     	
-        foreach($line_arr as $col)
+        foreach($line_arr as $i => $col)
         {
             $this->data .=   '<Cell ss:StyleID="sCap"><Data ss:Type="String">' . $col . '</Data></Cell>' . "\n";
             
@@ -263,8 +266,17 @@ class xmlxlsSheet
             
             /**
              * Carreguem les columnes
+             * l'AutoFitWidth només funciona per a numèrics i data, no pas per
+             * a text, així que se li pot passar la llargària.
+             * En cas de que sigui data o num i la llargària passada sigui inferior
+             * a la que ocupa, llavors l'autofit s'activa.
              */
-            $this->columns .= '<Column ss:AutoFitWidth="1" />' . "\n";
+            $this->columns .= '<Column ss:AutoFitWidth="1" ';
+            if (is_array($dataLen) and isset($dataLen[$i]) )
+            {
+            	$this->columns .= " ss:Width=\"{$dataLen[$i]}\" ";
+            }
+            $this->columns .= ' />' . "\n";
         }
         
         $this->data .= "</Row>\n";

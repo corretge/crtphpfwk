@@ -73,8 +73,8 @@ Class xmlxls
     	/**
     	 * processem els worksheets
     	 */
-    	foreach ($workSheets as $wks) {
-    		$this->fwrite .= $workSheets;
+    	foreach ($this->workSheets as $wks) {
+    		$this->fwrite .= $wks->Render();
     	}
     	
     	
@@ -145,7 +145,8 @@ Class xmlxls
     	 * no posem   <LocationOfComponents HRef="file:///D:\AutoPlay\Docs\OFFICE11\OFFICE\"/>
     	 */
     	
-        $lastsav = date("e");
+        $lastsav = date("Y-m-d") . 'T' . date("H:i:s") . 'Z';
+
         $header = <<<EOH
 <?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
@@ -164,7 +165,7 @@ Class xmlxls
   <DownloadComponents/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <ActiveSheet>1</ActiveSheet>
+  <ActiveSheet>0</ActiveSheet>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -224,7 +225,7 @@ class xmlxlsSheet
     	
         foreach($line_arr as $i => $col)
         {
-            $this->data .=   '<Cell ss:StyleID="sDet"><Data ss:Type="' . $this->dataType[$i] .'">'. $cell . "</Cell>\n";
+            $this->data .=   '<Cell ss:StyleID="sDet"><Data ss:Type="' . $this->dataType[$i] .'">'. $col . "</Data></Cell>\n";
         }
         
         $this->data .= "</Row>\n";
@@ -253,7 +254,7 @@ class xmlxlsSheet
     	
         foreach($line_arr as $col)
         {
-            $this->data .=   '<Cell ss:MergeDown="1" ss:StyleID="sCap"><Data ss:Type="String">' . $col . '</Cell>' . "\n";
+            $this->data .=   '<Cell ss:StyleID="sCap"><Data ss:Type="String">' . $col . '</Data></Cell>' . "\n";
             
             /**
              * Preparem uns tipus per omissió sempre string

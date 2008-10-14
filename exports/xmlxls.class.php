@@ -108,6 +108,8 @@ Class xmlxls
     
     /**
      * Mostrem l'Excel com un arxiu que s'obre automàticament.
+     * Per a Excel 2003 l'extensió ha de ser .xls
+     * Per a Excel 2007 l'extensió ha de ser .xml
      */
     public function popUp($file)
     {
@@ -345,7 +347,7 @@ class xmlxlsSheet
 		 */
 		$xml .= "</Table>\n";			   
      	
-		$xml .= "</Worksheet>";
+		$xml .= "</Worksheet>\n";
 		
      	return $xml;
      }

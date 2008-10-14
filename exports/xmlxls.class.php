@@ -4,6 +4,9 @@
  * 
  * Especificacions: 
  * http://msdn.microsoft.com/en-us/library/aa140066.aspx
+ * 
+ * per si l'enllaç more, hi ha una còpia a 
+ * http://docs.google.com/a/corretge.cat/Doc?id=dd9b9j4b_139fbhc62d6
  *
  */
 Class xmlxls
@@ -185,6 +188,23 @@ Class xmlxls
   <Style ss:ID="sDet">
    <Font ss:Size="11"/>
   </Style>
+  <Style ss:ID="sDetString">
+   <Font ss:Size="11"/>
+  </Style>
+  <Style ss:ID="sDetDateTime">
+   <Alignment ss:Horizontal="Right" />
+   <Font ss:Size="11"/>
+  </Style>
+  <Style ss:ID="sDetBoolean">
+   <Font ss:Size="11"/>
+  </Style>
+  <Style ss:ID="sDetNumber">
+  <Alignment ss:Horizontal="Right" />
+   <Font ss:Size="11"/>
+  </Style>
+  <Style ss:ID="sDetError">
+   <Font ss:Size="11"/>
+  </Style>          
  </Styles>        
 EOH;
         return $header;
@@ -226,7 +246,7 @@ class xmlxlsSheet
     	
         foreach($line_arr as $i => $col)
         {
-            $this->data .=   '<Cell ss:StyleID="sDet"><Data ss:Type="' . $this->dataType[$i] .'">'. $col . "</Data></Cell>\n";
+            $this->data .=   '<Cell ss:StyleID="sDet' . $this->dataType[$i] .'"><Data ss:Type="' . $this->dataType[$i] .'">'. $col . "</Data></Cell>\n";
         }
         
         $this->data .= "</Row>\n";
@@ -242,6 +262,8 @@ class xmlxlsSheet
     	
     	/**
     	 * si ens envien els tipus, els coloquem
+    	 * els tipus possibles són:
+    	 * Number, DateTime, Boolean, String, and Error
     	 */
     	If (is_array($dataType))
     	{

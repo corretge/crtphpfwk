@@ -27,9 +27,9 @@ class crtmlMenu
 		";
 	}
 	
-	public function Render()
+	public function __toString()
 	{
-		$return = $this->html->Render();
+		$return = (string) $this->html;
 		
 		
 		return $return;
@@ -136,7 +136,7 @@ class crtmlMenuBloc
 		$this->punts->addContingut($crtmlMenuPunt);
 	}
 	
-	public function Render()
+	public function __toString()
 	{
 		$this->html->addContingut("<h3>$this->titol</h3>");
 		$this->html->addContingut($this->punts);
@@ -153,11 +153,11 @@ class crtmlMenuBloc
 class crtmlMenuPunt extends crtmlA 
 {
 	
-	public function Render()
+	public function __toString()
 	{
 		$return = "<li>";
 		
-		$return .= parent::Render();
+		$return .= parent::__toString();
 		
 		$return .= "</li>";
 		

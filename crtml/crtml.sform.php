@@ -95,11 +95,11 @@ class sform
 		$this->fldset->addContingut($object);
 	}
 	
-	public function Render()
+	public function __toString()
 	{	
 		$this->add2Form($this->fldset);
 		$this->add2Form($this->butonera);
-		return $this->form->Render();
+		return (string) $this->form;
 	}
 	
 	public function renderScript()
@@ -116,7 +116,7 @@ class sform
  */
 class sFormTable extends sform
 {
-	public function Render()
+	public function __toString()
 	{
 		/**
 		 * interceptem el contingut del Fieldset i el
@@ -127,7 +127,7 @@ class sFormTable extends sform
 			
 		$this->add2Form($table);
 		$this->add2Form($this->butonera);
-		return $this->form->Render();
+		return (string) $this->form;
 	}
 	
 	public function renderFldsetAsTable($fldset)
@@ -170,7 +170,7 @@ class sFormTable extends sform
 				{
 					if (is_object($Camp))
 					{
-						$tdF[$tdN] .= " " . (string) $Camp->Render();		
+						$tdF[$tdN] .= " " . (string) $Camp;		
 					}
 				}
 			}

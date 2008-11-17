@@ -18,12 +18,12 @@ class crtmlWWW
 		$this->html = new crtmlHTML('Transitional');
 	}
 	
-	public function Render()
+	public function __toString()
 	{
 		$this->html->set_head($this->head);
 		$this->html->set_body($this->body);
 		
-		return $this->html->Render();
+		return (string) $this->html;
 		
 	}
 	

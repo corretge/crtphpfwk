@@ -12,6 +12,11 @@
  */
 
 /**
+ * preparem una excepció crtml
+ */
+class crtmlException extends Exception { }
+
+/**
  * Definim una classe per als elements HTML.
  * 
  * Contindrà mètodes i propietats comunes a tots els elements HTML.
@@ -20,7 +25,7 @@
  * @version 1.0
  * @package crtml
  */
-class crtmlBODYelement
+abstract class crtmlBODYelement
 {
 	
 	/**
@@ -65,16 +70,6 @@ class crtmlBODYelement
 	protected $Id;
 	
 	protected $Name;
-
-	/**
-	 * Indiquem l'id que tindrà l'SPAN que envoltarà aquest
-	 * element HTML.
-	 * 
-	 * Per a propòsits AJAX
-	 *
-	 * @var string
-	 */
-	protected $spanId;
 	
 	/**
 	 * Establim estil CSS
@@ -90,7 +85,7 @@ class crtmlBODYelement
 	 * @param string $Title
 	 * @see $Title
 	 */
-	function setTitle($Title)
+	public function setTitle($Title)
 	{
 		/**
 		 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
@@ -106,7 +101,7 @@ class crtmlBODYelement
 	 * @param string $Class
 	 * @see $Class
 	 */
-	function setClass($Class)
+	public function setClass($Class)
 	{
 		$this->Class = $Class;
 	}
@@ -117,7 +112,7 @@ class crtmlBODYelement
 	 * @param string $Id
 	 * @see $Id
 	 */
-	function setId($Id)
+	public function setId($Id)
 	{
 		$this->Id = $Id;
 	}
@@ -138,7 +133,7 @@ class crtmlBODYelement
 	 * @param string $Name
 	 * @see $Name
 	 */
-	function setName($Name)
+	public function setName($Name)
 	{
 		$this->Name = $Name;
 	}
@@ -149,7 +144,7 @@ class crtmlBODYelement
 	 * @param string $spanId
 	 * @see $spanId
 	 */
-	function setspanId($spanId)
+	public function setspanId($spanId)
 	{
 		$this->spanId = $spanId;
 	}
@@ -162,7 +157,7 @@ class crtmlBODYelement
 	 * @param string $Style
 	 * @see $Style
 	 */
-	function setStyle($Style)
+	public function setStyle($Style)
 	{
 		$this->Style = $Style;
 	}
@@ -182,7 +177,7 @@ class crtmlBODYelement
 		}
 		else 
 		{
-				die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Event <b>$event</b> not found.");
+			throw new crtmlException("Event <b>$event</b> not found.");
 		}
 		
 	}
@@ -193,7 +188,7 @@ class crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	function Render()
+	public function __toString()
 	{
 		/**
 		 * La inicialització del tipus d'element la faran les
@@ -350,7 +345,7 @@ class crtmlP extends crtmlBODYelement
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Align <b>$Align</b> not found.");
+					throw new crtmlException("Align <b>$Align</b> not found.");
 					break;
 			}		
 
@@ -598,7 +593,7 @@ class crtmlIMG extends crtmlBODYelement
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Align <b>$Align</b> not found.");
+					throw new crtmlException("Align <b>$Align</b> not found.");
 					break;
 			}		
 
@@ -1165,7 +1160,7 @@ class crtmlLEGEND extends crtmlBODYelement
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Align <b>$Align</b> not found.");
+					throw new crtmlException("Align <b>$Align</b> not found.");
 					break;
 			}		
 
@@ -1419,7 +1414,7 @@ class crtmlBUTTON extends crtmlBODYelement
 				 * Si no és cap dels tipus permesos, donem un error fatal.
 				 */
 				default:
-					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Button type <b>$Type</b> no valid.");
+					throw new crtmlException("Button type <b>$Type</b> no valid.");
 					break;
 			}		
 		
@@ -2239,7 +2234,7 @@ class crtmlINPUT extends crtmlBODYelement
 				 * Si no és cap dels tipus permesos, donem un error fatal.
 				 */
 				default:
-					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Input Type <b>$Type</b> no valid.");
+					throw new crtmlException("Input type <b>$Type</b> no valid.");
 					break;
 			}		
 		
@@ -3383,7 +3378,7 @@ class crtmlBODY
 		}
 		else 
 		{
-				die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Event <b>$event</b> not found.");
+			throw new crtmlException("Event <b>$event</b> not found.");
 		}
 		
 	}

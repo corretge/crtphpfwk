@@ -141,7 +141,7 @@ class crtmlMenuBloc
 		$this->html->addContingut("<h3>$this->titol</h3>");
 		$this->html->addContingut($this->punts);
 		
-		return $this->html->RendeR();
+		return (string) $this->html;
 	}
 	
 }

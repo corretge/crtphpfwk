@@ -255,6 +255,13 @@ abstract class crtmlBODYelement
 		return $return;
 	}
 	
+	/**
+	 * per compatibilitat amb la versió 1 
+	 */
+	public function Render()
+	{
+		return $this->__toString();
+	}
 	
 }
 
@@ -309,9 +316,13 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 		foreach ($this->Continguts as $Contingut) 
 		{
 			$return .= (string) $Contingut;
+
+			
+			
 		}
+		//var_dump($Contingut);
 		
-		return $return;
+		return (string) $return;
 	}
 	
 }
@@ -1067,8 +1078,10 @@ class crtmlFORM extends crtmlBODYcontainer
 	 *
 	 * @return string
 	 */
-	function __toString($formtag = true)
+	function __toString()
 	{
+		$formtag = true;
+		
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
@@ -3068,6 +3081,15 @@ class crtmlLINK
 		
 		return $return;
 	}
+	
+	/**
+	 * per compatibilitat amb la versió 1 
+	 */
+	public function Render()
+	{
+		return $this->__toString();
+	}
+	
 }
 
 class crtmlSCRIPT
@@ -3202,6 +3224,15 @@ class crtmlSCRIPT
 		
 		return $return;
 	}
+	
+	/**
+	 * per compatibilitat amb la versió 1 
+	 */
+	public function Render()
+	{
+		return $this->__toString();
+	}
+	
 }
 
 
@@ -3369,6 +3400,16 @@ class crtmlHTML
 		
 		return $return;
 	}
+	
+	/**
+	 * per compatibilitat amb la versió 1 
+	 */
+	public function Render()
+	{
+		return $this->__toString();
+	}
+	
+	
 }
 
 

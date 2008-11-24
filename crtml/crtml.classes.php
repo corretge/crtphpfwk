@@ -255,13 +255,6 @@ abstract class crtmlBODYelement
 		return $return;
 	}
 	
-	/**
-	 * per compatibilitat amb la versió 1 
-	 */
-	public function Render()
-	{
-		return $this->__toString();
-	}
 	
 }
 
@@ -272,10 +265,13 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 {
 	/**
 	 * Continguts, generalment objectes HTML
+	 * 
+	 * el fem públic pq es pugui manegar desde 
+	 * les aplicacions per l'arbre.
 	 *
 	 * @var Array
 	 */
-	protected $Continguts = Array();
+	public $Continguts = Array();
 	
 	/**
 	 * retornem l'array dels continguts
@@ -299,7 +295,25 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 		}
 		else 
 		{
-			$this->Continguts[] = $Contingut;
+			/**
+			 * si te ID, coloquem el contingut en aquella ID.
+			 */
+			if (method_exists($Contingut, 'get_Id'))
+			{
+				$id = $Contingut->get_Id();
+				if ($id != '')
+				{
+					$this->Continguts[$id] = $Contingut;
+				}
+				else
+				{
+					$this->Continguts[] = $Contingut;
+				}			
+			}
+			else
+			{
+				$this->Continguts[] = $Contingut;
+			}
 		}
 	}
 	
@@ -316,13 +330,9 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 		foreach ($this->Continguts as $Contingut) 
 		{
 			$return .= (string) $Contingut;
-
-			
-			
 		}
-		//var_dump($Contingut);
 		
-		return (string) $return;
+		return $return;
 	}
 	
 }
@@ -1078,10 +1088,8 @@ class crtmlFORM extends crtmlBODYcontainer
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function __toString($formtag = true)
 	{
-		$formtag = true;
-		
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
@@ -1238,14 +1246,7 @@ class crtmlLEGEND extends crtmlBODYelement
  * @package crtml
  */
 class crtmlFIELDSET extends crtmlBODYcontainer  
-{
-	/**
-	 * Objectes i continguts del FIELDSET
-	 *
-	 * @var Array
-	 */
-	protected $Continguts = Array();
-	
+{	
 	/**
 	 * LEGEND del FieldSet, objecte crtml
 	 *
@@ -2582,13 +2583,15 @@ class crtmlDIV extends crtmlBODYcontainer
 	 */
 	function setText($Text)
 	{
-		/**
-   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+	 	/**
+   	 	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
 		 * emprarem htmlentities doncs no funciona correctament.
 		 * $this->Text = htmlentities($Text, ENT_COMPAT);
 		 */
-		$this->Continguts = Array();
-		$this->Continguts[] = $Text;
+		if ($Text != '')
+		{
+			$this->Continguts[''] = $Text;
+		}
 	}
 
 	
@@ -2617,6 +2620,69 @@ class crtmlDIV extends crtmlBODYcontainer
 		return $return;
 	}
 
+}
+
+class crtmlSPAN extends crtmlBODYcontainer 
+{
+	
+	/**
+	 * Text que conté el element.
+	 *
+	 * @var string Required
+	 */
+	protected $Text;
+	
+	/**
+	 * Constructor de la classe peDIV.
+	 *
+	 * @param string $id
+	 * @param string $text
+	 * @param string $classe
+	 */
+	function __construct($id, $text =null, $classe=null) 
+	{
+		
+		$this->setId($id);
+		$this->setText($text);
+		$this->setClass($classe);
+	}
+	
+	/**
+	 * Establim Text esborrant qualsevol contingut anterior.
+	 *
+	 * @param string $Text
+	 * @see $Text
+	 */
+	function setText($Text)
+	{
+	 	/**
+   	 	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		 * emprarem htmlentities doncs no funciona correctament.
+		 * $this->Text = htmlentities($Text, ENT_COMPAT);
+		 */
+		if ($Text != '')
+		{
+			$this->Continguts[''] = $Text;
+		}
+	}
+	
+	function __toString()
+	{
+		/**
+		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
+		 */
+		$return = "<SPAN";
+		
+		$return .= parent::__toString();
+		
+		$return .= ">";
+		
+		$return .= $this->insereixContinguts();
+		
+		$return .= "</SPAN>\n";
+		
+		return $return;
+	}
 }
 
 /**
@@ -2833,8 +2899,6 @@ class crtmlSTYLE extends crtmlBODYcontainer
 	
 	protected $title;
 	
-	protected $Continguts;
-
 	public function __construct($type = "text/css")
 	{
 		$this->Continguts = Array();
@@ -2872,17 +2936,6 @@ class crtmlSTYLE extends crtmlBODYcontainer
 			$this->title = $title;
 	}
 	
-	/**
-	 * Establim Contiguts
-	 *
-	 * @param string $Continguts
-	 * @see $Continguts
-	 */
-	function addContingut($Contingut)
-	{
-		$this->Continguts[] = $Contingut;
-	}
-
 	/**
 	 * Renderitzem l'objecte
 	 *
@@ -3081,15 +3134,6 @@ class crtmlLINK
 		
 		return $return;
 	}
-	
-	/**
-	 * per compatibilitat amb la versió 1 
-	 */
-	public function Render()
-	{
-		return $this->__toString();
-	}
-	
 }
 
 class crtmlSCRIPT
@@ -3224,15 +3268,6 @@ class crtmlSCRIPT
 		
 		return $return;
 	}
-	
-	/**
-	 * per compatibilitat amb la versió 1 
-	 */
-	public function Render()
-	{
-		return $this->__toString();
-	}
-	
 }
 
 
@@ -3400,16 +3435,6 @@ class crtmlHTML
 		
 		return $return;
 	}
-	
-	/**
-	 * per compatibilitat amb la versió 1 
-	 */
-	public function Render()
-	{
-		return $this->__toString();
-	}
-	
-	
 }
 
 

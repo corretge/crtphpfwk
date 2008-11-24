@@ -12,11 +12,6 @@
  */
 
 /**
- * preparem una excepció crtml
- */
-class crtmlException extends Exception { }
-
-/**
  * Definim una classe per als elements HTML.
  * 
  * Contindrà mètodes i propietats comunes a tots els elements HTML.
@@ -25,7 +20,7 @@ class crtmlException extends Exception { }
  * @version 1.0
  * @package crtml
  */
-abstract class crtmlBODYelement
+class crtmlBODYelement
 {
 	
 	/**
@@ -70,6 +65,16 @@ abstract class crtmlBODYelement
 	protected $Id;
 	
 	protected $Name;
+
+	/**
+	 * Indiquem l'id que tindrà l'SPAN que envoltarà aquest
+	 * element HTML.
+	 * 
+	 * Per a propòsits AJAX
+	 *
+	 * @var string
+	 */
+	protected $spanId;
 	
 	/**
 	 * Establim estil CSS
@@ -85,7 +90,7 @@ abstract class crtmlBODYelement
 	 * @param string $Title
 	 * @see $Title
 	 */
-	public function setTitle($Title)
+	function setTitle($Title)
 	{
 		/**
 		 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
@@ -101,7 +106,7 @@ abstract class crtmlBODYelement
 	 * @param string $Class
 	 * @see $Class
 	 */
-	public function setClass($Class)
+	function setClass($Class)
 	{
 		$this->Class = $Class;
 	}
@@ -112,7 +117,7 @@ abstract class crtmlBODYelement
 	 * @param string $Id
 	 * @see $Id
 	 */
-	public function setId($Id)
+	function setId($Id)
 	{
 		$this->Id = $Id;
 	}
@@ -133,7 +138,7 @@ abstract class crtmlBODYelement
 	 * @param string $Name
 	 * @see $Name
 	 */
-	public function setName($Name)
+	function setName($Name)
 	{
 		$this->Name = $Name;
 	}
@@ -144,7 +149,7 @@ abstract class crtmlBODYelement
 	 * @param string $spanId
 	 * @see $spanId
 	 */
-	public function setspanId($spanId)
+	function setspanId($spanId)
 	{
 		$this->spanId = $spanId;
 	}
@@ -157,7 +162,7 @@ abstract class crtmlBODYelement
 	 * @param string $Style
 	 * @see $Style
 	 */
-	public function setStyle($Style)
+	function setStyle($Style)
 	{
 		$this->Style = $Style;
 	}
@@ -177,7 +182,7 @@ abstract class crtmlBODYelement
 		}
 		else 
 		{
-			throw new crtmlException("Event <b>$event</b> not found.");
+				die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Event <b>$event</b> not found.");
 		}
 		
 	}
@@ -188,7 +193,7 @@ abstract class crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	function Render()
 	{
 		/**
 		 * La inicialització del tipus d'element la faran les
@@ -258,95 +263,24 @@ abstract class crtmlBODYelement
 	
 }
 
-/**
- * Definim un tipus d'element que és un contenidor d'objectes
- */
-abstract class crtmlBODYcontainer extends crtmlBODYelement 
-{
-	/**
-	 * Continguts, generalment objectes HTML
-	 * 
-	 * el fem públic pq es pugui manegar desde 
-	 * les aplicacions per l'arbre.
-	 *
-	 * @var Array
-	 */
-	public $Continguts = Array();
-	
-	/**
-	 * retornem l'array dels continguts
-	 */
-	public function getContinguts()
-	{
-		return $this->Continguts;
-	}
-	
-	/**
-	 * Afegim un contingut, objecte crtml
-	 *
-	 * @param object $Contingut
-	 * @param string $pos
-	 */
-	public function addContingut($Contingut, $pos=null)
-	{
-		if (isset($pos))
-		{
-			$this->Continguts[$pos] = $Contingut;
-		}
-		else 
-		{
-			/**
-			 * si te ID, coloquem el contingut en aquella ID.
-			 */
-			if (method_exists($Contingut, 'get_Id'))
-			{
-				$id = $Contingut->get_Id();
-				if ($id != '')
-				{
-					$this->Continguts[$id] = $Contingut;
-				}
-				else
-				{
-					$this->Continguts[] = $Contingut;
-				}			
-			}
-			else
-			{
-				$this->Continguts[] = $Contingut;
-			}
-		}
-	}
-	
-	
-	public function insereixContinguts()
-	{
-		$return = "";
-		/**
-		 * Renderitzem els continguts.
-		 * 
-		 * Si es tracta d'un objecte el renderitzem i si es
-		 * tracta d'una cadena l'afegim tal qual.
-		 */
-		foreach ($this->Continguts as $Contingut) 
-		{
-			$return .= (string) $Contingut;
-		}
-		
-		return $return;
-	}
-	
-}
 
 /**
  * Definim l'element Paràgraf HTML
  *
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 2.0
+ * @version 1.0
  * @package crtml
  */
-class crtmlP extends crtmlBODYcontainer 
+class crtmlP extends crtmlBODYelement 
 {
+	/**
+	 * Text que conté el pàrraf.
+	 *
+	 * @var string Required
+	 */
+	protected $Text;
+		
 	
 	/**
 	 * Indiquem l'aliniació del paràgref respecte el text
@@ -371,7 +305,7 @@ class crtmlP extends crtmlBODYcontainer
 	 * @param string $text
 	 * @param string $classe
 	 */
-	public function __construct($text = null, $classe=null) 
+	function __construct($text = null, $classe=null) 
 	{
 		$this->setText($text);
 		$this->setClass($classe);
@@ -383,15 +317,15 @@ class crtmlP extends crtmlBODYcontainer
 	 * @param string $Text
 	 * @see $Text
 	 */
-	public function setText($Text)
+	function setText($Text)
 	{
 	
-	/**
+		/**
    	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
 		 * emprarem htmlentities doncs no funciona correctament.
 		 * $this->Text = htmlentities($Text, ENT_COMPAT);
 		 */
-		$this->addContingut($Text);
+		$this->Text = $Text;
 	}
 
 	
@@ -401,7 +335,7 @@ class crtmlP extends crtmlBODYcontainer
 	 * @param string $Align
 	 * @see $Align
 	 */
-	public function setAlign($Align)
+	function setAlign($Align)
 	{
 		switch (strtolower($Align))
 			{
@@ -416,7 +350,7 @@ class crtmlP extends crtmlBODYcontainer
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Align <b>$Align</b> not found.");
+					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Align <b>$Align</b> not found.");
 					break;
 			}		
 
@@ -428,14 +362,14 @@ class crtmlP extends crtmlBODYcontainer
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
 		 */
 		$return = "<p";
 		
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		
 		/**
@@ -447,11 +381,7 @@ class crtmlP extends crtmlBODYcontainer
 		}		
 						
 		
-		$return .= ">";
-		
-		$return .= $this->insereixContinguts();
-		
-		$return .= "</p>\n";
+		$return .= ">$this->Text</p>\n";
 		
 		return $return;
 	}
@@ -668,7 +598,7 @@ class crtmlIMG extends crtmlBODYelement
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Align <b>$Align</b> not found.");
+					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Align <b>$Align</b> not found.");
 					break;
 			}		
 
@@ -723,14 +653,14 @@ class crtmlIMG extends crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
 		 */
 		$return = "<img src=\"$this->Src\" alt=\"$this->Alt\"";
 		
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * Si han indicat Align
@@ -919,13 +849,13 @@ class crtmlA extends crtmlBODYelement
 	}
 	
 	
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem la cadena A
 		 */
 		$return = "<a href=\"$this->hRef\"";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * Si han indicat Target
@@ -950,7 +880,7 @@ class crtmlA extends crtmlBODYelement
  * @version 1.0
  * @package crtml
  */
-class crtmlFORM extends crtmlBODYcontainer  
+class crtmlFORM extends crtmlBODYelement 
 {
 	/**
 	 * URL de l'agent que processarà el formulari, si no indiquem rés,
@@ -997,6 +927,13 @@ class crtmlFORM extends crtmlBODYcontainer
 	 * @var string
 	 */
 	protected $Target;
+	
+	/**
+	 * Continguts del formulari, generalment objectes crtml.
+	 *
+	 * @var Array
+	 */
+	protected $Continguts = Array();
 	
 	
 	function __construct($Action, $Method = 'GET')
@@ -1088,7 +1025,7 @@ class crtmlFORM extends crtmlBODYcontainer
 	 *
 	 * @return string
 	 */
-	function __toString($formtag = true)
+	function Render($formtag = true)
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
@@ -1100,7 +1037,7 @@ class crtmlFORM extends crtmlBODYcontainer
 			$return = "\t<FORM Action=\"$this->Action\"";
 
 			
-			$return .= parent::__toString();
+			$return .= parent::Render();
 			
 			/**
 			 * Si han indicat Method
@@ -1140,7 +1077,18 @@ class crtmlFORM extends crtmlBODYcontainer
 		/**
 		 * Renderitzem els continguts
 		 */
-		$return .= $this->insereixContinguts();
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			
+		}
 		
 		if ($formtag) {
 			$return .= "\n\t</FORM>\n";
@@ -1217,7 +1165,7 @@ class crtmlLEGEND extends crtmlBODYelement
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Align <b>$Align</b> not found.");
+					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Align <b>$Align</b> not found.");
 					break;
 			}		
 
@@ -1228,10 +1176,10 @@ class crtmlLEGEND extends crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		$return = "\t\t<LEGEND";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		$return .= ">$this->Text</LEGEND>\n";
 
 		return $return;	
@@ -1245,8 +1193,15 @@ class crtmlLEGEND extends crtmlBODYelement
  * @version 1.0
  * @package crtml
  */
-class crtmlFIELDSET extends crtmlBODYcontainer  
-{	
+class crtmlFIELDSET extends crtmlBODYelement 
+{
+	/**
+	 * Objectes i continguts del FIELDSET
+	 *
+	 * @var Array
+	 */
+	protected $Continguts = Array();
+	
 	/**
 	 * LEGEND del FieldSet, objecte crtml
 	 *
@@ -1291,25 +1246,60 @@ class crtmlFIELDSET extends crtmlBODYcontainer
 		return $this->Legend->getText();
 	}
 	
+	function getContinguts()
+	{
+		return $this->Continguts;
+	}
+	/**
+	 * Afegim un contingut, objecte crtml
+	 *
+	 * @param object $Contingut
+	 * @param string $pos
+	 */
+	function addContingut($Contingut, $pos=null)
+	{
+		if (isset($pos))
+		{
+			$this->Continguts[$pos] = $Contingut;
+		}
+		else 
+		{
+			$this->Continguts[] = $Contingut;
+		}
+	}
 
 	/**
 	 * Renderitzem el FieldSet
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
 		 */
 		$return = "\t<FIELDSET";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		$return .= ">\n";
 		
-		$return .= (string) $this->Legend;
+		$return .= $this->Legend->Render();
 		
-		$return .= $this->insereixContinguts();
+		/**
+		 * Renderitzem els continguts
+		 */
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			
+		}
 		
 		$return .= "\n\t</FIELDSET>\n";
 		
@@ -1325,7 +1315,7 @@ class crtmlFIELDSET extends crtmlBODYcontainer
  * @version 1.0
  * @package crtml
  */
-class crtmlBUTTON extends crtmlBODYcontainer  
+class crtmlBUTTON extends crtmlBODYelement 
 {
 	/**
 	 * This attribute assigns the control name.
@@ -1365,7 +1355,14 @@ class crtmlBUTTON extends crtmlBODYcontainer
 	 */
 	protected $AccessKey;
 	
-
+	/**
+	 * Text a mostrar o imatge.
+	 * 
+	 * En el cas de que no s'indiqui cap contingut, procediriem a mostrar el nom del botó.
+	 *
+	 * @var Array
+	 */
+	protected $Continguts=Array();
 	
 	/**
 	 * Constructor del botó
@@ -1422,7 +1419,7 @@ class crtmlBUTTON extends crtmlBODYcontainer
 				 * Si no és cap dels tipus permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Button type <b>$Type</b> no valid.");
+					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Button type <b>$Type</b> no valid.");
 					break;
 			}		
 		
@@ -1450,20 +1447,29 @@ class crtmlBUTTON extends crtmlBODYcontainer
 		$this->AccessKey = $AccessKey;
 	}
 	
-
+	/**
+	 * Afegim un contingut, objecte crtml
+	 *
+	 * @param object $Contingut
+	 */
+	function addContingut($Contingut)
+	{
+			$this->Continguts[] = $Contingut;
+	}
+	
 	/**
 	 * Renderitzem el botó
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
 		 */
 		$return = "\t<BUTTON";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * Si han indicat Name
@@ -1511,13 +1517,24 @@ class crtmlBUTTON extends crtmlBODYcontainer
 		/**
 		 * Renderitzem els continguts
 		 */
-		$n = $this->insereixContinguts();
-		$return .= $n;
+		$n=0;
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			$n++;
+		}
 		
 		/**
 		 * Si no hi havia cap contingut, posem com a text el nom del botó que és obligatori.
 		 */
-		if ($n=='')
+		if ($n==0)
 		{
 			$return .= $this->Name;
 		}
@@ -1631,10 +1648,10 @@ class crtmlOPTION extends crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		$return = "\t\t<OPTION";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * Si han indicat Selected
@@ -1777,7 +1794,7 @@ class crtmlSELECT extends crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
@@ -1790,7 +1807,7 @@ class crtmlSELECT extends crtmlBODYelement
 			$return = "";
 		}
 		$return .= "\t<SELECT";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * Si han indicat Name
@@ -1832,7 +1849,7 @@ class crtmlSELECT extends crtmlBODYelement
 		 */
 		foreach ($this->Opcions as $Opcio) 
 		{
-			$return .= (string) $Opcio;
+			$return .= $Opcio->Render();
 		}
 		
 		
@@ -1854,7 +1871,7 @@ class crtmlSELECT extends crtmlBODYelement
  * @version 1.0
  * @package crtml
  */
-class crtmlTEXTAREA extends crtmlBODYcontainer  
+class crtmlTEXTAREA extends crtmlBODYelement 
 {
 	/**
 	 * Nom del camp
@@ -1897,6 +1914,14 @@ class crtmlTEXTAREA extends crtmlBODYcontainer
 	 * @var string
 	 */
 	protected $AccessKey;
+	
+	/**
+	 * Continguts originals de la TEXTAREA
+	 *
+	 * @var string
+	 */
+	protected $Continguts;
+	
 	
 	function __construct($Name)
 	{
@@ -1977,20 +2002,29 @@ class crtmlTEXTAREA extends crtmlBODYcontainer
 		$this->AccessKey = $AccessKey;
 	}
 
+	/**
+	 * Afegim un contingut, objecte crtml o text.
+	 *
+	 * @param object $Contingut
+	 */
+	function addContingut($Contingut)
+	{
+			$this->Continguts[] = $Contingut;
+	}
 	
 	/**
 	 * Renderitzem la TEXTAREA
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
 		 */
 		$return = "\t<TEXTAREA";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * col·loquem els rows i les cols
@@ -2036,7 +2070,23 @@ class crtmlTEXTAREA extends crtmlBODYcontainer
 		/**
 		 * Renderitzem els continguts
 		 */
-		$return .= $this->insereixContinguts();
+		$n=0;
+		if (is_array($this->Continguts))
+		{
+			foreach ($this->Continguts as $Contingut) 
+			{
+				if (is_object($Contingut))
+				{
+					$return .= $Contingut->Render();
+				}
+				else 
+				{
+					$return .= $Contingut;
+				}
+				$n++;
+			}
+		}
+		
 		
 		$return .= "</TEXTAREA>\n";
 		
@@ -2189,7 +2239,7 @@ class crtmlINPUT extends crtmlBODYelement
 				 * Si no és cap dels tipus permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Input type <b>$Type</b> no valid.");
+					die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Input Type <b>$Type</b> no valid.");
 					break;
 			}		
 		
@@ -2335,14 +2385,14 @@ class crtmlINPUT extends crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
 		 */
 		$return = "\t<INPUT";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * Si han indicat Type
@@ -2445,10 +2495,11 @@ class crtmlINPUT extends crtmlBODYelement
  * @version 1.0
  * @package crtml
  */
-class crtmlLABEL extends crtmlBODYcontainer  
+class crtmlLABEL extends crtmlBODYelement 
 {
 	protected $For;
 	protected $AccessKey;
+	protected $Continguts;
 	protected $Label;
 	
 	/**
@@ -2503,15 +2554,25 @@ class crtmlLABEL extends crtmlBODYcontainer
 		$this->AccessKey = $AccessKey;
 	}
 	
+	/**
+	 * Establim Contiguts
+	 *
+	 * @param string $Continguts
+	 * @see $Continguts
+	 */
+	function addContingut($Contingut)
+	{
+		$this->Continguts[] = $Contingut;
+	}
 	
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
 		 */
 		$return = "\t<LABEL";
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		/**
 		 * Si han indicat For
@@ -2535,7 +2596,18 @@ class crtmlLABEL extends crtmlBODYcontainer
 		$return .= ">";
 
 		
-		$return .= $this->insereixContinguts();
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			
+		}
 		
 		
 		$return .= "</LABEL>\n";
@@ -2551,7 +2623,7 @@ class crtmlLABEL extends crtmlBODYcontainer
  * @version 1.0
  * @package crtml
  */
-class crtmlDIV extends crtmlBODYcontainer  
+class crtmlDIV extends crtmlBODYelement 
 {
 	/**
 	 * Text que conté el element.
@@ -2559,6 +2631,8 @@ class crtmlDIV extends crtmlBODYcontainer
 	 * @var string Required
 	 */
 	protected $Text;
+
+	protected $Continguts;
 	
 	/**
 	 * Constructor de la classe peDIV.
@@ -2583,15 +2657,13 @@ class crtmlDIV extends crtmlBODYcontainer
 	 */
 	function setText($Text)
 	{
-	 	/**
-   	 	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+		/**
+   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
 		 * emprarem htmlentities doncs no funciona correctament.
 		 * $this->Text = htmlentities($Text, ENT_COMPAT);
 		 */
-		if ($Text != '')
-		{
-			$this->Continguts[''] = $Text;
-		}
+		$this->Continguts = Array();
+		$this->Continguts[] = $Text;
 	}
 
 	
@@ -2602,87 +2674,47 @@ class crtmlDIV extends crtmlBODYcontainer
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
 		 */
 		$return = "<DIV";
 		
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 		$return .= ">";
 		
-		$return .= $this->insereixContinguts();
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			
+		}
+
 		
 		$return .= "</DIV>\n";
 		
 		return $return;
 	}
 
-}
+	/**
+	 * Establim Contiguts
+	 *
+	 * @param string $Continguts
+	 * @see $Continguts
+	 */
+	function addContingut($Contingut)
+	{
+		$this->Continguts[] = $Contingut;
+	}
 
-class crtmlSPAN extends crtmlBODYcontainer 
-{
-	
-	/**
-	 * Text que conté el element.
-	 *
-	 * @var string Required
-	 */
-	protected $Text;
-	
-	/**
-	 * Constructor de la classe peDIV.
-	 *
-	 * @param string $id
-	 * @param string $text
-	 * @param string $classe
-	 */
-	function __construct($id, $text =null, $classe=null) 
-	{
-		
-		$this->setId($id);
-		$this->setText($text);
-		$this->setClass($classe);
-	}
-	
-	/**
-	 * Establim Text esborrant qualsevol contingut anterior.
-	 *
-	 * @param string $Text
-	 * @see $Text
-	 */
-	function setText($Text)
-	{
-	 	/**
-   	 	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
-		 * emprarem htmlentities doncs no funciona correctament.
-		 * $this->Text = htmlentities($Text, ENT_COMPAT);
-		 */
-		if ($Text != '')
-		{
-			$this->Continguts[''] = $Text;
-		}
-	}
-	
-	function __toString()
-	{
-		/**
-		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
-		 */
-		$return = "<SPAN";
-		
-		$return .= parent::__toString();
-		
-		$return .= ">";
-		
-		$return .= $this->insereixContinguts();
-		
-		$return .= "</SPAN>\n";
-		
-		return $return;
-	}
 }
 
 /**
@@ -2693,10 +2725,17 @@ class crtmlSPAN extends crtmlBODYcontainer
  * @version 1.0
  * @package crtml
  */
-class crtmlHEAD extends crtmlBODYcontainer 
+class crtmlHEAD 
 {
 
-
+	/**
+	 * Array que conté els elements de l'apartat HEAD
+	 *
+	 * @var Array
+	 */
+	protected $Continguts;
+	
+	
 	function __construct() 
 	{
 	}
@@ -2708,7 +2747,7 @@ class crtmlHEAD extends crtmlBODYcontainer
 	 *
 	 * @return string
 	 */
-	function __toString()
+	function Render()
 	{
 		/**
 		 * Inicialitzem el que tornarem
@@ -2729,12 +2768,34 @@ class crtmlHEAD extends crtmlBODYcontainer
 		/**
 		 * Afegim els continguts
 		 */
-		$return .= $this->insereixContinguts();
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			
+		}
 
 		
 		$return .= "</HEAD>\n";
 		
 		return $return;
+	}
+
+	/**
+	 * Establim Contiguts
+	 *
+	 * @param string $Continguts
+	 * @see $Continguts
+	 */
+	public function addContingut($Contingut)
+	{
+		$this->Continguts[] = $Contingut;
 	}
 	
 	/**
@@ -2775,7 +2836,7 @@ class crtmlTITLE
 			$this->Title = $Title;
 	}
 	
-	public function __toString()
+	public function Render()
 	{
 		$return = "<TITLE";
 		$return .= ">";
@@ -2849,7 +2910,7 @@ class crtmlMETA
 			$this->scheme = $scheme;
 	}
 	
-	public function __toString()
+	public function Render()
 	{
 		$return = '<META content="' . $this->content . '" ';
 		
@@ -2891,7 +2952,7 @@ class crtmlMETA
  * @link http://www.w3.org/TR/html401/present/styles.html#h-14.2.3
  *
  */
-class crtmlSTYLE extends crtmlBODYcontainer 
+class crtmlSTYLE
 {
 	protected $media;
 	
@@ -2899,6 +2960,8 @@ class crtmlSTYLE extends crtmlBODYcontainer
 	
 	protected $title;
 	
+	protected $Continguts;
+
 	public function __construct($type = "text/css")
 	{
 		$this->Continguts = Array();
@@ -2937,10 +3000,21 @@ class crtmlSTYLE extends crtmlBODYcontainer
 	}
 	
 	/**
+	 * Establim Contiguts
+	 *
+	 * @param string $Continguts
+	 * @see $Continguts
+	 */
+	function addContingut($Contingut)
+	{
+		$this->Continguts[] = $Contingut;
+	}
+
+	/**
 	 * Renderitzem l'objecte
 	 *
 	 */
-	public function __toString()
+	public function Render()
 	{
 
 		$return = "<STYLE";
@@ -2974,7 +3048,18 @@ class crtmlSTYLE extends crtmlBODYcontainer
 		/**
 		 * Afegim els continguts
 		 */
-		$return .= $this->insereixContinguts();
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			
+		}
 		
 		$return .= "</STYLE>\n";
 		
@@ -3076,7 +3161,7 @@ class crtmlLINK
 			$this->media = $media;
 	}
 	
-	public function __toString()
+	public function Render()
 	{
 		$return = "<LINK href=\"$this->href\" ";
 		
@@ -3218,7 +3303,7 @@ class crtmlSCRIPT
 			$this->code = $code;
 	}
 	
-	public function __toString()
+	public function Render()
 	{
 		$return = "<SCRIPT ";
 		
@@ -3271,14 +3356,16 @@ class crtmlSCRIPT
 }
 
 
-class crtmlBODY extends crtmlBODYcontainer 
+class crtmlBODY
 {
 	protected $Events = Array(	'onload' => "",
 								'onunload' => "");
 	
+	protected $Continguts;
+	
 	public function __construct()
 	{
-	
+		$this->Continguts = Array();
 	}
 	
 	/**
@@ -3296,13 +3383,23 @@ class crtmlBODY extends crtmlBODYcontainer
 		}
 		else 
 		{
-			throw new crtmlException("Event <b>$event</b> not found.");
+				die ("***ERROR " . __CLASS__ . "::" . __FUNCTION__ . " > Event <b>$event</b> not found.");
 		}
 		
 	}
 	
+	/**
+	 * Afegim un contingut, objecte crtml o text.
+	 *
+	 * @param object $Contingut
+	 */
+	function addContingut($Contingut)
+	{
+			$this->Continguts[] = $Contingut;
+	}
 	
-	public function __toString()
+	
+	public function Render()
 	{
 		$return = "<BODY ";
 		
@@ -3325,7 +3422,18 @@ class crtmlBODY extends crtmlBODYcontainer
 		/**
 		 * Afegim els continguts
 		 */
-		$return .= $this->insereixContinguts();
+		foreach ($this->Continguts as $Contingut) 
+		{
+			if (is_object($Contingut))
+			{
+				$return .= $Contingut->Render();
+			}
+			else 
+			{
+				$return .= $Contingut;
+			}
+			
+		}
 
 		$return .= "</BODY>\n";
 
@@ -3407,7 +3515,7 @@ class crtmlHTML
 	}
 	
 	
-	public function __toString()
+	public function Render()
 	{
 		$return = "";
 						
@@ -3424,11 +3532,11 @@ class crtmlHTML
 
 		if (is_object($this->head))
 		{
-			$return .= (string) $this->head;
+			$return .= $this->head->Render();
 		}
 		if (is_object($this->body))
 		{
-			$return .= (string) $this->body;
+			$return .= $this->body->Render();
 		}
 		
 		$return .= "</HTML>";
@@ -3484,14 +3592,14 @@ class crtmlIFRAME extends crtmlBODYelement
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	public function Render()
 	{
 		/**
 		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
 		 */
 		$return = "<IFRAME ";
 		
-		$return .= parent::__toString();
+		$return .= parent::Render();
 		
 
 		/**

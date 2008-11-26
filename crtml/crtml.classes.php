@@ -818,7 +818,7 @@ class crtmlIMG extends crtmlBODYelement
  * @version 1.0
  * @package crtml
  */
-class crtmlA extends crtmlBODYelement 
+class crtmlA extends crtmlBODYcontainer  
 {
 	
 	protected $Text;
@@ -849,23 +849,14 @@ class crtmlA extends crtmlBODYelement
 		/**
 		 * Informem de les propietats de l'entitat
 		 */
-		$this->setText($text);
+		$this->Text = $text;
+		$this->addContingut($text);
 		$this->sethRef($hRef);
 		$this->setTitle($Title);
 		$this->setTarget($Target);
 		
 	}
-	
-	/**
-	 * Establim el Text de l'enllaç que potser un text o un objecte crtml
-	 *
-	 * @param string $Text
-	 */
-	function setText($Text)
-	{
-		$this->Text = $Text;
-	}
-	
+
 	
 	/**
 	 * Establim la URL a on apunta l'enllaç
@@ -909,11 +900,14 @@ class crtmlA extends crtmlBODYelement
 		else 
 		{
 		/**
-   	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
+   	 	 * Fins que no actualizem a PHP6 que te suport utf-8 en natiu, no 
 		 * emprarem htmlentities doncs no funciona correctament.
 		 * $this->Title = htmlentities($this->Text, ENT_COMPAT);
 		 */
-			$this->Title = $this->Text;
+			if (!is_object($this->Text))
+			{
+				$this->Title = $this->Text;
+			}
 		}
 		
 	}
@@ -937,7 +931,11 @@ class crtmlA extends crtmlBODYelement
 		
 		
 
-		$return .= ">$this->Text</a>";
+		$return .= ">";
+		
+		$return .= $this->insereixContinguts();
+			
+		$return .= "</a>";
 		
 		return $return;
 	}

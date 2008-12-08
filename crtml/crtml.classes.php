@@ -1374,6 +1374,7 @@ class crtmlBUTTON extends crtmlBODYelement
 	function __construct($Name, $Type = 'submit')
 	{
 		$this->setName($Name);
+		$this->setId($Name);
 		$this->setType($Type);
 	}
 	
@@ -1732,6 +1733,7 @@ class crtmlSELECT extends crtmlBODYelement
 		$this->Events['onchange'] = "";
 		
 		$this->setName($Name);
+		$this->setId($Name);
 	}
 	
 	/**
@@ -1934,6 +1936,7 @@ class crtmlTEXTAREA extends crtmlBODYelement
 		$this->Events['onselect'] = "";
 		
 		$this->setName($Name);
+		$this->setId($Name);
 	}
 	
 	/**

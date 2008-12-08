@@ -2210,6 +2210,7 @@ class crtmlINPUT extends crtmlBODYelement
 		$this->Events['onselect'] = "";
 		
 		$this->setName($Name);
+		$this->setId($Name);
 	}
 	
 	/**

@@ -20,6 +20,8 @@ class crtmlWWW
 	 */
 	protected $version = 2.0;
 	
+	protected $CharSet = 'utf-8';
+	
 	public function __construct()
 	{
 		$this->html = new crtmlHTML('Transitional');
@@ -36,6 +38,27 @@ class crtmlWWW
 		return $this->version;
 	}
 	
+	/**
+	 * Establim el valor a CharSet
+	 */
+	public function setCharSet($CharSet)
+	{
+		$this->CharSet = $CharSet;
+	}
+	
+	/**
+	 * Retornem el valor de CharSet
+	 */
+	public function rtvCharSet()
+	{
+		return $this->CharSet;
+	}
+	
+	public function header()
+	{
+		header("Content-Type: text/html; charset={$this->CharSet}");
+	}
+		
 	/**
 	 * fem la representació escrita de l'objecte
 	 *

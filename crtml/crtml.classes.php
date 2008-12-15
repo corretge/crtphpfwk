@@ -264,6 +264,14 @@ abstract class crtmlBODYelement
 abstract class crtmlBODYcontainer extends crtmlBODYelement 
 {
 	/**
+	 * Si es declara aquesta array associativa, apliquem restriccions
+	 * sobre els tipus d'objecte que es poden attachar
+	 *
+	 * @var Array
+	 */
+	protected $restrictConts = false;
+	
+	/**
 	 * Continguts, generalment objectes HTML
 	 * 
 	 * el fem públic pq es pugui manegar desde 
@@ -289,6 +297,23 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 	 */
 	public function addContingut($Contingut, $pos=null)
 	{
+		/**
+		 * si hi ha cap restricció i no es compleix,
+		 * saltem.
+		 * si existeix sempre serà una array associativa
+		 * amb el nom dels objectes vàlids.
+		 */
+		if ($this->restrictConts)
+		{
+			$tipus = get_class($Contingut);
+			if (!($this->restrictConts['tipus'] == true))
+			{
+				$orig = get_class($this);
+				throw new crtmlException("$orig Container can't addContingut objects type <b>$tipus</b>.");
+			}
+			
+		}
+		
 		if (isset($pos))
 		{
 			$this->Continguts[$pos] = $Contingut;
@@ -3510,4 +3535,376 @@ class crtmlIFRAME extends crtmlBODYelement
 
 }
 
+class crtmlTABLE extends crtmlBODYcontainer
+{
+	/**
+	 * Indiquem que només li podem afegir <TR>
+	 * @var Array
+	 */
+	protected $restrictConts = Array('crtmlTHEAD' => true, 
+										'crtmlTFOOT' => true, 
+										'crtmlTBODY' => true,
+										'crtmlCAPTION' => true,
+										'crtmlCOLGROUP' => true,
+										'crtmlTR' => true) ;	
+
+	
+	protected $Summary; 	//      %Text;         #IMPLIED  -- purpose/structure for speech output--
+	protected $Width;		//      %Length;       #IMPLIED  -- table width --
+	protected $Border;		//      %Pixels;       #IMPLIED  -- controls frame width around table --
+	protected $Frame;		//      %TFrame;       #IMPLIED  -- which parts of frame to render --
+	protected $Rules;		//      %TRules;       #IMPLIED  -- rulings between rows and cols --
+	protected $Cellspacing;	//	    %Length;       #IMPLIED  -- spacing between cells --
+	protected $Cellpadding;	//	    %Length;       #IMPLIED  -- spacing within cells --
+	
+	
+	/**
+	 * Establim el valor a Summary
+	 */
+	public function setSummary($Summary)
+	{
+		$this->Summary = $Summary;
+	}
+		
+	/**
+	 * Establim el valor a Width
+	 */
+	public function setWidth($Width)
+	{
+		$this->Width = $Width;
+	}
+
+	/**
+	 * Establim el valor a Border
+	 */
+	public function setBorder($Border)
+	{
+		$this->Border = $Border;
+	}
+
+	/**
+	 * Establim el valor a Frame
+	 */
+	public function setFrame($Frame)
+	{
+		$this->Frame = $Frame;
+	}
+
+	/**
+	 * Establim el valor a Rules
+	 */
+	public function setRules($Rules)
+	{
+		$this->Rules = $Rules;
+	}
+
+	/**
+	 * Establim el valor a Cellspacing
+	 */
+	public function setCellspacing($Cellspacing)
+	{
+		$this->Cellspacing = $Cellspacing;
+	}
+
+	/**
+	 * Establim el valor a Cellpadding
+	 */
+	public function setCellpadding($Cellpadding)
+	{
+		$this->Cellpadding = $Cellpadding;
+	}
+
+	public function __toString()
+	{
+		/**
+		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
+		 */
+		$return = "<TABLE ";
+		
+		$return .= parent::__toString();
+		
+
+		/**
+		 * Si han indicat Summary
+		 */
+		if (isset($this->Summary))
+		{
+			$return .= " Summary=\"$this->Summary\"";
+		}
+		/**
+		 * Si han indicat Width
+		 */
+		if (isset($this->Width))
+		{
+			$return .= " Width=\"$this->Width\"";
+		}
+		/**
+		 * Si han indicat Border
+		 */
+		if (isset($this->Border))
+		{
+			$return .= " Border=\"$this->Border\"";
+		}
+		/**
+		 * Si han indicat Frame
+		 */
+		if (isset($this->Frame))
+		{
+			$return .= " Frame=\"$this->Frame\"";
+		}
+		/**
+		 * Si han indicat Rules
+		 */
+		if (isset($this->Rules))
+		{
+			$return .= " Rules=\"$this->Rules\"";
+		}
+		/**
+		 * Si han indicat Cellspacing
+		 */
+		if (isset($this->Cellspacing))
+		{
+			$return .= " Cellspacing=\"$this->Cellspacing\"";
+		}
+		/**
+		 * Si han indicat Cellpadding
+		 */
+		if (isset($this->Cellpadding))
+		{
+			$return .= " Cellpadding=\"$this->Cellpadding\"";
+		}
+		
+
+				
+		$return .= ">";
+		
+		/**
+		 * Afegim els continguts
+		 */
+		$return .= $this->insereixContinguts();
+		
+		$return .= "</TABLE>\n";
+		
+		return $return;
+	}
+	
+}
+
+
+class crtmlTHEAD extends crtmlBODYcontainer
+{
+	/**
+	 * Indiquem que només li podem afegir <TR>
+	 * @var Array
+	 */
+	protected $restrictConts = Array('crtmlTR' => true) ;	
+	
+	/**
+	 * definim el TAG com una propietat per a poder-ho fer servir 
+	 * a la resta de TAG's similars
+	 *
+	 * @var string
+	 */
+	protected $TAG = "THEAD";
+	
+	protected $Align;	//    (left|center|right|justify|char) #IMPLIED
+	protected $Char;	//    %Character;    #IMPLIED  -- alignment char, e.g. char=':' --
+	protected $Charoff;	//    %Length;       #IMPLIED  -- offset for alignment char --"
+	protected $Valign;	//    (top|middle|bottom|baseline) #IMPLIED"
+	
+	/**
+	 * Establim el valor a Valign
+	 */
+	public function setValign($Valign)
+	{
+		
+		switch (strtolower($Align))
+		{
+			case 'top':
+			case 'middle':
+			case 'bottom':
+			case 'baseline':
+				$this->Valign = $Valign;
+				break;
+			/**
+			 * Si no és cap dels tipus permesos, donem un error fatal.
+			 */
+			default:
+				$orig = get_class($this);
+				throw new crtmlException("$orig VAlign type <b>$Valign</b> no valid.");
+				break;
+		}		
+		
+	}
+		
+
+	/**
+	 * Establim el valor a Align
+	 */
+	public function setAlign($Align)
+	{
+		switch (strtolower($Align))
+		{
+			case 'left':
+			case 'center':
+			case 'right':
+			case 'justify':
+			case 'char':
+				$this->Align = $Align;
+				break;
+			/**
+			 * Si no és cap dels tipus permesos, donem un error fatal.
+			 */
+			default:
+				$orig = get_class($this);
+				throw new crtmlException("$orig Align type <b>$Align</b> no valid.");
+				break;
+		}		
+
+	}
+	/**
+	 * Establim el valor a Char
+	 */
+	public function setChar($Char)
+	{
+		$this->Char = $Char;
+	}
+	/**
+	 * Establim el valor a Charoff
+	 */
+	public function setCharoff($Charoff)
+	{
+		$this->Charoff = $Charoff;
+	}
+
+	
+	public function __toString()
+	{
+		/**
+		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
+		 */
+		$return = "<{$this->TAG} ";
+		
+		$return .= parent::__toString();
+	
+		/**
+		 * Si han indicat Align
+		 */
+		if (isset($this->Align))
+		{
+			$return .= " Align=\"$this->Align\"";
+		}
+		/**
+		 * Si han indicat Char
+		 */
+		if (isset($this->Char))
+		{
+			$return .= " Char=\"$this->Char\"";
+		}
+		/**
+		 * Si han indicat Charoff
+		 */
+		if (isset($this->Charoff))
+		{
+			$return .= " Charoff=\"$this->Charoff\"";
+		}
+		/**
+		 * Si han indicat Valign
+		 */
+		if (isset($this->Valign))
+		{
+			$return .= " Valign=\"$this->Valign\"";
+		}
+		
+				
+		$return .= ">";
+		
+		/**
+		 * Afegim els continguts
+		 */
+		$return .= $this->insereixContinguts();
+		
+		$return .= "</{$this->TAG}>\n";
+		
+		return $return;
+	}
+		
+}
+
+class crtmlTFOOT extends crtmlTHEAD
+{
+	/**
+	 * definim el TAG com una propietat per a poder-ho fer servir 
+	 * a la resta de TAG's similars
+	 *
+	 * @var string
+	 */
+	protected $TAG = "TFOOT";		
+}
+
+class crtmlTBODY extends crtmlTHEAD 
+{
+	/**
+	 * definim el TAG com una propietat per a poder-ho fer servir 
+	 * a la resta de TAG's similars
+	 *
+	 * @var string
+	 */
+	protected $TAG = "TBODY";	
+}
+
+class crtmlTR extends crtmlTHEAD 
+{
+	/**
+	 * definim el TAG com una propietat per a poder-ho fer servir 
+	 * a la resta de TAG's similars
+	 *
+	 * @var string
+	 */
+	protected $TAG = "TR";
+
+	/**
+	 * Indiquem que només li podem afegir <TH> i <TD>
+	 * @var Array
+	 */
+	protected $restrictConts = Array('crtmlTH' => true,
+										'crtmlTD' => true);
+	
+}
+
+class crtmlTH extends crtmlTHEAD 
+{
+	/**
+	 * definim el TAG com una propietat per a poder-ho fer servir 
+	 * a la resta de TAG's similars
+	 *
+	 * @var string
+	 */
+	protected $TAG = "TH";
+
+	/**
+	 * Indiquem que podem afegir de tot
+	 * @var Array
+	 */
+	protected $restrictConts = false;
+	
+}
+
+class crtmlTD extends crtmlTHEAD 
+{
+	/**
+	 * definim el TAG com una propietat per a poder-ho fer servir 
+	 * a la resta de TAG's similars
+	 *
+	 * @var string
+	 */
+	protected $TAG = "TD";
+
+	/**
+	 * Indiquem que podem afegir de tot
+	 * @var Array
+	 */
+	protected $restrictConts = false;
+	
+}
 ?>

@@ -22,7 +22,7 @@ class crtmlException extends Exception { }
  * Contindrà mètodes i propietats comunes a tots els elements HTML.
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 abstract class crtmlBODYelement
@@ -488,7 +488,7 @@ class crtmlP extends crtmlBODYcontainer
  * Definim l'element Imatge HTML
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  * 
  * @todo Implementar TABINDEX en aquest element
@@ -840,7 +840,7 @@ class crtmlIMG extends crtmlBODYelement
  * Definició de A com a enllaç
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlA extends crtmlBODYcontainer  
@@ -970,7 +970,7 @@ class crtmlA extends crtmlBODYcontainer
  * Definició de l'entitat FORM
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlFORM extends crtmlBODYcontainer  
@@ -1178,7 +1178,7 @@ class crtmlFORM extends crtmlBODYcontainer
  * Definició de l'entitat LEGEND
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlLEGEND extends crtmlBODYelement 
@@ -1265,7 +1265,7 @@ class crtmlLEGEND extends crtmlBODYelement
  * Definició de l'entitat FieldSet
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlFIELDSET extends crtmlBODYcontainer  
@@ -1345,7 +1345,7 @@ class crtmlFIELDSET extends crtmlBODYcontainer
  * Definició de l'entitat Button
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlBUTTON extends crtmlBODYcontainer  
@@ -1556,7 +1556,7 @@ class crtmlBUTTON extends crtmlBODYcontainer
  * Definició de l'entitat Option
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlOPTION extends crtmlBODYelement 
@@ -1686,7 +1686,7 @@ class crtmlOPTION extends crtmlBODYelement
  * Definició de l'entitat HTML SELECT
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlSELECT extends crtmlBODYelement 
@@ -1874,7 +1874,7 @@ class crtmlSELECT extends crtmlBODYelement
  * Definició de l'entitat HTML TEXTAREA
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlTEXTAREA extends crtmlBODYcontainer  
@@ -2071,7 +2071,7 @@ class crtmlTEXTAREA extends crtmlBODYcontainer
  * Definció de l'entitat HTML INPUT
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlINPUT extends crtmlBODYelement 
@@ -2465,7 +2465,7 @@ class crtmlINPUT extends crtmlBODYelement
  * Definició de l'entitat HTML LABEL
  *
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlLABEL extends crtmlBODYcontainer  
@@ -2571,7 +2571,7 @@ class crtmlLABEL extends crtmlBODYcontainer
  *
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlDIV extends crtmlBODYcontainer  
@@ -2713,7 +2713,7 @@ class crtmlSPAN extends crtmlBODYcontainer
  *
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlHEAD extends crtmlBODYcontainer 
@@ -3466,7 +3466,7 @@ class crtmlHTML
  *
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 class crtmlIFRAME extends crtmlBODYelement 

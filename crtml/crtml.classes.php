@@ -7,7 +7,7 @@
  * @link http://www.w3.org/TR/html401/#minitoc
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
- * @version 1.0
+ * @version 2.0
  * @package crtml
  */
 

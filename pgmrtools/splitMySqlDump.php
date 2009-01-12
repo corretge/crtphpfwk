@@ -47,13 +47,16 @@ if ($fIn)
 		}
 	}
 
-	fclose($fOut);
+	if(isset($fOut))
+	{
+		fclose($fOut);
+	}
 	fclose($fIn);
 	echo "\nOk\n";
 }
 else
 {
-	echo "\nError llegint arxiu {$argv[1]}\n";
+	echo "\nError llegint arxiu '{$argv[1]}'\n";
 }
 
 

@@ -742,6 +742,34 @@ class crtmlIMG extends crtmlBODYelement
 	{
 		$this->TabIndex = $TabIndex;
 	}
+	
+	function resize($mida, $HV = "H")
+	{
+		if ($this->Height != '' and $this->Height != 0
+		 and $this->Width != '' and $this->Width != 0)
+		 {
+		 	switch ($HV) {
+		 		case 'H':
+		 			$this->setHeight(($mida*$this->Height/$this->Width));
+		 			$this->setWidth($mida);
+		 		break;
+		 		
+		 		case 'V':
+		 			$this->setHeight(($mida/$this->Height*$this->Width));
+		 			$this->setHeight($mida);;
+		 		break;
+		 		
+		 		default:
+		 			throw new Exception("crtmlIMG::resize($mida, $HV) Parameter HV not recognized. Must be H for horitzontal and V for vertical.");
+		 		break;
+		 	}
+		 	
+		 }
+		 else
+		 {
+		 	throw new Exception("crtmlIMG::resize($mida, $HV) Can't resize image without Height and Width properties.");
+		 }
+	}
 		
 	/**
 	 * Renderitzem la imatge

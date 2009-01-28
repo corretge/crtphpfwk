@@ -306,7 +306,7 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 		if ($this->restrictConts)
 		{
 			$tipus = get_class($Contingut);
-			if (!($this->restrictConts['tipus'] == true))
+			if (!($this->restrictConts[$tipus] == true))
 			{
 				$orig = get_class($this);
 				throw new crtmlException("$orig Container can't addContingut objects type <b>$tipus</b>.");
@@ -3740,6 +3740,24 @@ class crtmlTHEAD extends crtmlBODYcontainer
 	protected $Charoff;	//    %Length;       #IMPLIED  -- offset for alignment char --"
 	protected $Valign;	//    (top|middle|bottom|baseline) #IMPLIED"
 	
+	/**
+	 * constructor. Si ens passen en la creació una cadena, l'afegim
+	 * com a contingut
+	 *
+	 * @param string $literal
+	 */
+	public function __construct($literal = null, $class = null)
+	{
+		if (isset($literal))
+		{
+			$this->addContingut($literal);
+		}
+		
+		if (isset($class))
+		{
+			$this->setClass($class);
+		}
+	}
 	/**
 	 * Establim el valor a Valign
 	 */

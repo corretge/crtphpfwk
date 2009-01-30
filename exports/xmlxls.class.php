@@ -257,7 +257,7 @@ class xmlxlsSheet
     /**
      * Imprimim la capçalera i muntem algunes dades generals.
      */
-    public function writeHeadLine(array $line_arr, $dataLen = null, $dataType = null)
+    public function writeHeadLine(array $line_arr, $dataLen = null, $dataType = null, $titol = null)
     {
 
     	$tmpType = Array();
@@ -275,6 +275,16 @@ class xmlxlsSheet
     	{
     		$dataType = null;
     	}
+    	
+		/**
+    	 * si hi ha un titol el posem
+    	 */
+    	if (isset($titol))
+    	{
+    		$this->data .= '<Row ss:AutoFitHeight="1">' . "\n";	
+    		$this->data .=   '<Cell ss:StyleID="sCap"><Data ss:Type="String">' . $titol . '</Data></Cell>' . "\n";
+    		$this->data .= "</Row>\n";
+        }
 
     	
     	$this->data .= '<Row ss:AutoFitHeight="1">' . "\n";

@@ -1,8 +1,6 @@
 <?php
 /**
- * test per a provar el tema de l'error de que zend date 
- * es passi com a objecte enllaçat quan s'assigna a altres
- * variables o arrays
+ * test per a provar l'enllaç d'objectes 
  */
 
 require_once('Zend/Date.php');
@@ -58,9 +56,6 @@ data_dump($aDate);
  * de l'objecte, i quan es recupera l'array, totes les
  * possicions tenen el mateix valor, el valor darrer 
  * de $data1 provocant molts maldecaps.
- * 
- * Quan es fa servir Zend_Date i s'assigna a altres
- * variables, cal indicar CLONE
  * 
  * @link http://es.php.net/clone
  *  

@@ -50,6 +50,24 @@ echo "aDate ";
 data_dump($aDate);
 
 
+echo "<h1>Assignació de variables</h1>";
+$data3 = 11;
+$aDate = array();
+echo "data1 abans";
+var_dump($data3);
+
+$aDate[] = $data3;
+$data3 += 22;
+$aDate[] = $data3;
+$data3 += 33;
+$aDate[] = $data3;
+
+echo "data1 final";
+var_dump($data3);
+
+echo "aDate ";
+var_dump($aDate);
+
 
 /**
  * Si no posem clone el que es fa és assignar un enllaç

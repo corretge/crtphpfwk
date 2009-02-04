@@ -19,12 +19,12 @@ function data_dump($Zend_Date)
 	{
 		foreach ($Zend_Date as $data)
 		{
-			echo $data->get(Zend_Date::ISO_8601) . "\n";
+			echo "{$data->get(Zend_Date::ISO_8601)}\n";
 		}
 	}
 	else
 	{
-		echo $Zend_Date->get(Zend_Date::ISO_8601) . "\n";
+		echo "{$Zend_Date->get(Zend_Date::ISO_8601)}\n";
 	}
 }
 
@@ -45,7 +45,7 @@ $aDate[] =   $data1;
 $data1->add('11:22:33', Zend_Date::TIMES);
 $aDate[] =   $data1;
 
-echo "data1 ";
+echo "data1 final";
 data_dump($data1);
 
 echo "aDate ";
@@ -76,7 +76,7 @@ $aDate[] =  clone $data2;
 $data2->add('11:22:33', Zend_Date::TIMES);
 $aDate[] =  clone $data2;
 
-echo "data2 ";
+echo "data2 final";
 data_dump($data2);
 
 echo "aDate ";

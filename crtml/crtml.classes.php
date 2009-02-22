@@ -603,6 +603,7 @@ class crtmlIMG extends crtmlBODYelement
 		$this->Src = $Src;
 	}
 	
+	
 	/**
 	 * Establim Alt
 	 *
@@ -741,6 +742,16 @@ class crtmlIMG extends crtmlBODYelement
 	function setTabIndex($TabIndex)
 	{
 		$this->TabIndex = $TabIndex;
+	}
+	
+	public function getHeight()
+	{
+		return intval($this->Height);
+	}
+	
+	public function getWidth()
+	{
+		return intval($this->Width);
 	}
 	
 	function resize($mida, $HV = "H")
@@ -2668,7 +2679,9 @@ class crtmlDIV extends crtmlBODYcontainer
 		
 		$return .= "</DIV>\n";
 		
+		
 		return $return;
+		
 	}
 
 }

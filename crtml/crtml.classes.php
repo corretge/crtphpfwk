@@ -869,7 +869,7 @@ class crtmlIMG extends crtmlBODYelement
 			$return .= " TabIndex=\"$this->TabIndex\"";
 		}
 		
-		$return .= " />\n";
+		$return .= " >\n";
 		
 		return $return;
 	}
@@ -2494,7 +2494,7 @@ class crtmlINPUT extends crtmlBODYelement
 			$return .= " AccessKey=\"$this->AccessKey\"";
 		}
 		
-		$return .= " />\n";
+		$return .= " >\n";
 		
 		return $return;
 	}			
@@ -2941,7 +2941,7 @@ class crtmlMETA
 			$return .= " SCHEME=\"$this->scheme\"";
 		}	
 		
-		$return .= "/>";
+		$return .= " >";
 		
 		return $return;
 	}

@@ -802,7 +802,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->Align))
 		{
-			$return .= " Align=\"$this->Align\"";
+			$return .= " align=\"$this->Align\"";
 		}
 		
 		/**
@@ -810,7 +810,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->Border))
 		{
-			$return .= " Border=\"$this->Border\"";
+			$return .= " border=\"$this->Border\"";
 		}
 				
 		/**
@@ -818,7 +818,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->Height))
 		{
-			$return .= " Height=\"$this->Height\"";
+			$return .= " height=\"$this->Height\"";
 		}
 		
 		/**
@@ -826,7 +826,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->HSpace))
 		{
-			$return .= " HSpace=\"$this->HSpace\"";
+			$return .= " hspace=\"$this->HSpace\"";
 		}
 		
 		/**
@@ -834,7 +834,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->LongDesc))
 		{
-			$return .= " LongDesc=\"$this->LongDesc\"";
+			$return .= " longdesc=\"$this->LongDesc\"";
 		}
 		
 		/**
@@ -842,7 +842,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->Name))
 		{
-			$return .= " Name=\"$this->Name\"";
+			$return .= " name=\"$this->Name\"";
 		}
 		
 		/**
@@ -850,7 +850,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->VSpace))
 		{
-			$return .= " VSpace=\"$this->VSpace\"";
+			$return .= " vspace=\"$this->VSpace\"";
 		}
 		
 		/**
@@ -858,7 +858,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->Width))
 		{
-			$return .= " Width=\"$this->Width\"";
+			$return .= " width=\"$this->Width\"";
 		}
 				
 			
@@ -867,7 +867,7 @@ class crtmlIMG extends crtmlBODYelement
 		 */
 		if (isset($this->TabIndex))
 		{
-			$return .= " TabIndex=\"$this->TabIndex\"";
+			$return .= " tabindex=\"$this->TabIndex\"";
 		}
 		
 		$return .= " >\n";
@@ -995,7 +995,7 @@ class crtmlA extends crtmlBODYcontainer
 		 */
 		if (isset($this->Target))
 		{
-			$return .= " Target=\"$this->Target\"";
+			$return .= " target=\"$this->Target\"";
 		}
 		
 		
@@ -1164,7 +1164,7 @@ class crtmlFORM extends crtmlBODYcontainer
 		$return = "";
 		
 		if ($formtag) {
-			$return = "\t<FORM Action=\"$this->Action\"";
+			$return = "\t<form action=\"$this->Action\"";
 
 			
 			$return .= parent::__toString();
@@ -1174,7 +1174,7 @@ class crtmlFORM extends crtmlBODYcontainer
 			 */
 			if (isset($this->Method))
 			{
-				$return .= " Method=\"$this->Method\"";
+				$return .= " method=\"$this->Method\"";
 			}
 			
 			/**
@@ -1182,7 +1182,7 @@ class crtmlFORM extends crtmlBODYcontainer
 			 */
 			if (isset($this->EncType))
 			{
-				$return .= " EncType=\"$this->EncType\"";
+				$return .= " enctype=\"$this->EncType\"";
 			}
 			
 			/**
@@ -1190,7 +1190,7 @@ class crtmlFORM extends crtmlBODYcontainer
 			 */
 			if (isset($this->Accept))
 			{
-				$return .= " Accept=\"$this->Accept\"";
+				$return .= " accept=\"$this->Accept\"";
 			}
 			
 			/**
@@ -1198,7 +1198,7 @@ class crtmlFORM extends crtmlBODYcontainer
 			 */
 			if (isset($this->Target))
 			{
-				$return .= " Target=\"$this->Target\"";
+				$return .= " target=\"$this->Target\"";
 			}
 			
 			$return .= ">\n";
@@ -1210,7 +1210,7 @@ class crtmlFORM extends crtmlBODYcontainer
 		$return .= $this->insereixContinguts();
 		
 		if ($formtag) {
-			$return .= "\n\t</FORM>\n";
+			$return .= "\n\t</form>\n";
 		}
 		
 		return $return;
@@ -1297,9 +1297,9 @@ class crtmlLEGEND extends crtmlBODYelement
 	 */
 	function __toString()
 	{
-		$return = "\t\t<LEGEND";
+		$return = "\t\t<legend ";
 		$return .= parent::__toString();
-		$return .= ">$this->Text</LEGEND>\n";
+		$return .= ">$this->Text</legend>\n";
 
 		return $return;	
 	}
@@ -1370,7 +1370,7 @@ class crtmlFIELDSET extends crtmlBODYcontainer
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
 		 */
-		$return = "\t<FIELDSET";
+		$return = "\t<fieldset ";
 		$return .= parent::__toString();
 		$return .= ">\n";
 		
@@ -1378,7 +1378,7 @@ class crtmlFIELDSET extends crtmlBODYcontainer
 		
 		$return .= $this->insereixContinguts();
 		
-		$return .= "\n\t</FIELDSET>\n";
+		$return .= "\n\t</fieldset>\n";
 		
 		return $return;
 	}
@@ -1529,15 +1529,40 @@ class crtmlBUTTON extends crtmlBODYcontainer
 		 * Iniciem l'element amb els paràmetres obligatoris i els
 		 * d'una entitat HTML genèrica.
 		 */
-		$return = "\t<BUTTON";
+		$return = "\t<button ";
 		$return .= parent::__toString();
 		
+		/**
+		 * Si han indicat AccessKey
+		 */
+		if (isset($this->AccessKey))
+		{
+			$return .= " accesskey=\"$this->AccessKey\"";
+		}
+				
 		/**
 		 * Si han indicat Name
 		 */
 		if (isset($this->Name))
 		{
-			$return .= " Name=\"$this->Name\"";
+			$return .= " name=\"$this->Name\"";
+		}
+		
+		
+		/**
+		 * Si han indicat TabIndex
+		 */
+		if (isset($this->TabIndex))
+		{
+			$return .= " tabindex=\"$this->TabIndex\"";
+		}
+		
+		/**
+		 * Si han indicat Type
+		 */
+		if (isset($this->Type))
+		{
+			$return .= " type=\"$this->Type\"";
 		}
 		
 		/**
@@ -1545,33 +1570,9 @@ class crtmlBUTTON extends crtmlBODYcontainer
 		 */
 		if (isset($this->Value))
 		{
-			$return .= " Value=\"$this->Value\"";
+			$return .= " value=\"$this->Value\"";
 		}
 
-		
-		/**
-		 * Si han indicat Type
-		 */
-		if (isset($this->Type))
-		{
-			$return .= " Type=\"$this->Type\"";
-		}
-		
-		/**
-		 * Si han indicat TabIndex
-		 */
-		if (isset($this->TabIndex))
-		{
-			$return .= " TabIndex=\"$this->TabIndex\"";
-		}
-		
-		/**
-		 * Si han indicat AccessKey
-		 */
-		if (isset($this->AccessKey))
-		{
-			$return .= " AccessKey=\"$this->AccessKey\"";
-		}
 		
 		$return .= ">\n";
 		
@@ -1590,7 +1591,7 @@ class crtmlBUTTON extends crtmlBODYcontainer
 		}
 		
 		
-		$return .= "\n\t</BUTTON>\n";
+		$return .= "\n\t</button>\n";
 		
 		return $return;
 	}	
@@ -1700,7 +1701,7 @@ class crtmlOPTION extends crtmlBODYelement
 	 */
 	function __toString()
 	{
-		$return = "\t\t<OPTION";
+		$return = "\t\t<option ";
 		$return .= parent::__toString();
 		
 		/**
@@ -1708,7 +1709,7 @@ class crtmlOPTION extends crtmlBODYelement
 		 */
 		if (isset($this->Selected))
 		{
-			$return .= " Selected";
+			$return .= " selected";
 		}
 	
 		/**
@@ -1716,10 +1717,10 @@ class crtmlOPTION extends crtmlBODYelement
 		 */
 		if (isset($this->Value))
 		{
-			$return .= " Value=\"$this->Value\"";
+			$return .= " value=\"$this->Value\"";
 		}
 		
-		$return .= ">" . $this->Text . "</OPTION>\n";
+		$return .= ">" . $this->Text . "</option>\n";
 		
 		return $return;
 	}
@@ -1856,15 +1857,23 @@ class crtmlSELECT extends crtmlBODYelement
 		else {
 			$return = "";
 		}
-		$return .= "\t<SELECT";
+		$return .= "\t<select ";
 		$return .= parent::__toString();
-		
+			
+		/**
+		 * Si han indicat AccessKey
+		 */
+		if (isset($this->AccessKey))
+		{
+			$return .= " accesskey=\"$this->AccessKey\"";
+		}
+				
 		/**
 		 * Si han indicat Name
 		 */
 		if (isset($this->Name))
 		{
-			$return .= " Name=\"$this->Name\"";
+			$return .= " name=\"$this->Name\"";
 		}
 		
 		/**
@@ -1881,16 +1890,9 @@ class crtmlSELECT extends crtmlBODYelement
 		 */
 		if (isset($this->TabIndex))
 		{
-			$return .= " TabIndex=\"$this->TabIndex\"";
+			$return .= " tabindex=\"$this->TabIndex\"";
 		}
-		
-		/**
-		 * Si han indicat AccessKey
-		 */
-		if (isset($this->AccessKey))
-		{
-			$return .= " AccessKey=\"$this->AccessKey\"";
-		}
+
 		
 		$return .= ">\n";
 		
@@ -1904,7 +1906,7 @@ class crtmlSELECT extends crtmlBODYelement
 		
 		
 		
-		$return .= "\n\t</SELECT>\n";
+		$return .= "\n\t</select>\n";
 
 		if (isset($this->spanId) and $this->spanId != '') {
 			$return .= "</span>";

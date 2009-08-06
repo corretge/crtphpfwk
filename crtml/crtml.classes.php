@@ -209,7 +209,7 @@ abstract class crtmlBODYelement
 		 */
 		if (isset($this->Id))
 		{
-			$return .= " Id=\"$this->Id\"";
+			$return .= " id=\"$this->Id\"";
 		}
 		
 
@@ -218,9 +218,17 @@ abstract class crtmlBODYelement
 		 */
 		if (isset($this->Name))
 		{
-			$return .= " Name=\"$this->Name\"";
+			$return .= " name=\"$this->Name\"";
 		}
 				
+		/**
+		 * Si han indicat Style
+		 */
+		if (isset($this->Style))
+		{
+			$return .= " style=\"$this->Style\"";
+		}
+
 		
 		/**
 		 * Si han indicat un Títol
@@ -230,13 +238,6 @@ abstract class crtmlBODYelement
 			$return .= " title=\"$this->Title\"";
 		}		
 		
-		/**
-		 * Si han indicat Style
-		 */
-		if (isset($this->Style))
-		{
-			$return .= " Style=\"$this->Style\"";
-		}
 		
 		/**
 		 * Si han indicat Events
@@ -981,6 +982,10 @@ class crtmlA extends crtmlBODYcontainer
 	{
 		/**
 		 * Iniciem la cadena A
+		 * 
+		 * El primer que col·loquem és HREF, com indica Google que 
+		 * s'ha de fer per a optimitzar la compressió.
+		 * @link http://code.google.com/intl/ca/speed/page-speed/docs/payload.html#GzipCompression
 		 */
 		$return = "<a href=\"$this->hRef\"";
 		$return .= parent::__toString();

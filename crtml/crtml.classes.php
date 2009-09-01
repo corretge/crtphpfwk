@@ -306,8 +306,9 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 		 */
 		if ($this->restrictConts)
 		{
+
 			$tipus = get_class($Contingut);
-			if (!($this->restrictConts[$tipus] == true))
+			if (!isset($this->restrictConts[$tipus]))
 			{
 				$orig = get_class($this);
 				throw new crtmlException("$orig Container can't addContingut objects type <b>$tipus</b>.");

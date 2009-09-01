@@ -2,8 +2,10 @@
 
 /**
  * Recuperem tots els objectes HTML
+ * i ens assegurem de que estem recuperant el de la mateixa carpeta.
  */
-require_once('crtml.classes.php');
+$jd = dirname(__FILE__);
+require_once($jd . '/crtml.classes.php');
 
 class crtmlWWW
 {

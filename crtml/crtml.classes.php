@@ -4004,4 +4004,80 @@ class crtmlTD extends crtmlTHEAD
 	protected $restrictConts = false;
 	
 }
+
+
+
+/**
+ * Definim l'element UL HTML
+ *
+ *  
+ * @author Àlex Corretgé <alex@corretge.cat>
+ * @version 2.0
+ * @package crtml
+ */
+class crtmlUL extends crtmlBODYcontainer 
+{
+	/**
+	 * Renderitzem
+	 *
+	 * @return string
+	 */
+	public function __toString()
+	{
+		/**
+		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
+		 */
+		$return = "<ul";
+		
+		$return .= parent::__toString();
+		
+		
+		$return .= ">";
+		
+		$return .= $this->insereixContinguts();
+		
+		$return .= "</ul>\n";
+		
+		return $return;
+	}
+		
+}
+
+
+/**
+ * Definim l'element LI HTML
+ *
+ *  
+ * @author Àlex Corretgé <alex@corretge.cat>
+ * @version 2.0
+ * @package crtml
+ */
+class crtmlLI extends crtmlBODYcontainer 
+{
+	/**
+	 * Renderitzem
+	 *
+	 * @return string
+	 */
+	public function __toString()
+	{
+		/**
+		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
+		 */
+		$return = "<li";
+		
+		$return .= parent::__toString();
+		
+		
+		$return .= ">";
+		
+		$return .= $this->insereixContinguts();
+		
+		$return .= "</li>\n";
+		
+		return $return;
+	}
+		
+}
+
 ?>

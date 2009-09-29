@@ -1991,6 +1991,17 @@ class crtmlTEXTAREA extends crtmlBODYcontainer
 	{
 		$this->Name = $Name;
 	}
+
+	/**
+	 * Retornem el valor de la propietat Name
+	 * @return string
+	 * @see $Name
+	 */
+	function getName()
+	{
+		return $this->Name;
+	}
+	
 	
 	/**
 	 * Establim Rows
@@ -2022,6 +2033,15 @@ class crtmlTEXTAREA extends crtmlBODYcontainer
 	 */
 	function setReadOnly($ReadOnly)
 	{
+		/**
+		 * si ens envien true, coloquem la
+		 * paraula READONLY que demana l'HTML.
+		 */
+		if ($ReadOnly === true)
+		{
+			$ReadOnly = 'READONLY';
+		}
+		
 		$this->ReadOnly = $ReadOnly;
 	}
 	
@@ -2274,6 +2294,16 @@ class crtmlINPUT extends crtmlBODYelement
 	function setName($Name)
 	{
 		$this->Name = $Name;
+	}
+	
+	/**
+	 * Retornem el valor de la propietat Name
+	 * @return string
+	 * @see $Name
+	 */
+	function getName()
+	{
+		return $this->Name;
 	}
 	
 	/**

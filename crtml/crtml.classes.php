@@ -78,6 +78,14 @@ abstract class crtmlBODYelement
 	 */
 	protected $Style;
 	
+	/**
+	 * Tots els elements tindran un array on poder especificar
+	 * atributs interns de programa.
+	 * 
+	 * @var array
+	 */
+	public $pgmAttr = array(); 
+	
 	
 	/**
 	 * Establim Title

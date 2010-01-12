@@ -3798,6 +3798,8 @@ class crtmlTHEAD extends crtmlBODYcontainer
 	protected $Char;	//    %Character;    #IMPLIED  -- alignment char, e.g. char=':' --
 	protected $Charoff;	//    %Length;       #IMPLIED  -- offset for alignment char --"
 	protected $Valign;	//    (top|middle|bottom|baseline) #IMPLIED"
+	protected $ColSpan;
+	protected $RowSpan;
 	
 	/**
 	 * constructor. Si ens passen en la creació una cadena, l'afegim
@@ -3882,6 +3884,15 @@ class crtmlTHEAD extends crtmlBODYcontainer
 		$this->Charoff = $Charoff;
 	}
 
+	public function setColSpan($ColSpan)
+	{
+		$this->ColSpan = intval($ColSpan);
+	}
+	
+	public function setRowSpan($RowSpan)
+	{
+		$this->RowSpan = intval($RowSpan);
+	}
 	
 	public function __toString()
 	{
@@ -3919,6 +3930,20 @@ class crtmlTHEAD extends crtmlBODYcontainer
 		if (isset($this->Valign))
 		{
 			$return .= " Valign=\"$this->Valign\"";
+		}
+		/**
+		 * Si han indicat ColSpan
+		 */
+		if (isset($this->ColSpan))
+		{
+			$return .= " ColSpan=\"$this->ColSpan\"";
+		}
+		/**
+		 * Si han indicat RowSpan
+		 */
+		if (isset($this->RowSpan))
+		{
+			$return .= " RowSpan=\"$this->RowSpan\"";
 		}
 		
 				

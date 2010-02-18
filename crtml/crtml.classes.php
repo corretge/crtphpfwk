@@ -1781,6 +1781,11 @@ class crtmlSELECT extends crtmlBODYelement
 	 */
 	protected $Opcions = Array();
 	
+	/**
+	 * Si és disabled la selecció o no
+	 * @var boolean
+	 */
+	protected $Disabled = false;
 	
 	function __construct($Name)
 	{
@@ -1825,6 +1830,27 @@ class crtmlSELECT extends crtmlBODYelement
 	function setMultiple($Multiple)
 	{
 		$this->Multiple = $Multiple;
+	}
+	
+	/**
+	 * Indiquem que el control és disabled
+	 */
+	public function setDisabled($disabled = 'DISABLED')
+	{
+		$this->Disabled = $disabled;
+	}
+	
+	public function setReadOnly($readOnly)
+	{
+		if ($readOnly)
+		{
+			$this->setDisabled();
+		}
+		else
+		{
+			$this->Disabled = false;
+		}
+			
 	}
 	
 	/**
@@ -1902,6 +1928,14 @@ class crtmlSELECT extends crtmlBODYelement
 			$return .= " tabindex=\"$this->TabIndex\"";
 		}
 
+		/**
+		 * si han indicat Disabled
+		 */
+		if (isset($this->Disabled))
+		{
+			$return .= " $this->Disabled";
+		}
+		
 		
 		$return .= ">\n";
 		
@@ -2190,6 +2224,13 @@ class crtmlINPUT extends crtmlBODYelement
 	protected $ReadOnly=false;
 	
 	/**
+	 * indiquem si està disabled.
+	 * 
+	 * @var boolean
+	 */
+	protected $Disabled=false;
+	
+	/**
 	 * This attribute tells the user agent the initial width of the control. 
 	 * The width is given in pixels except when type attribute has the value "text" or "password". 
 	 * In that case, its value refers to the (integer) number of characters. 
@@ -2361,6 +2402,27 @@ class crtmlINPUT extends crtmlBODYelement
 		{
 			$this->ReadOnly = $ReadOnly;
 		}
+		
+		/**
+		 * si és de tipus file, el farem disabled també
+		 */
+		if ($this->Type == 'file')
+		{
+			$this->setDisabled(true);	
+		}
+	}
+	
+	public function setDisabled($disabled = true)
+	{
+		if ($disabled === true)
+		{
+			$this->Disabled = 'DISABLED';	
+		}
+		else
+		{
+			$this->Disabled = $disabled;
+		}
+		
 	}
 	
 	/**
@@ -2482,6 +2544,14 @@ class crtmlINPUT extends crtmlBODYelement
 		{
 			$return .= " $this->ReadOnly";
 		}
+		
+		/**	
+		 * Si han indicat Disabled
+		 */
+		if ($this->Disabled)
+		{
+			$return .= " $this->Disabled";
+		}		
 		
 		/**
 		 * Si han indicat Checked

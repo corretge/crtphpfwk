@@ -2356,6 +2356,15 @@ class crtmlINPUT extends crtmlBODYelement
 	}
 	
 	/**
+	 * Retornem el valor de la propietat Value
+	 * @return string
+	 */
+	public function getValue()
+	{
+		return $this->Value;
+	}
+	
+	/**
 	 * Establim Value
 	 *
 	 * @param string $Value
@@ -2665,7 +2674,7 @@ class crtmlLABEL extends crtmlBODYcontainer
 		return  $this->Label;
 	}
 
-	function getContinguts()
+	public function getContinguts()
 	{
 		return $this->Continguts;
 		

@@ -2794,7 +2794,7 @@ class crtmlDIV extends crtmlBODYcontainer
 		/**
 		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
 		 */
-		$return = "<DIV";
+		$return = "<div";
 		
 		$return .= parent::__toString();
 		
@@ -2802,7 +2802,7 @@ class crtmlDIV extends crtmlBODYcontainer
 		
 		$return .= $this->insereixContinguts();
 		
-		$return .= "</DIV>\n";
+		$return .= "</div>\n";
 		
 		
 		return $return;

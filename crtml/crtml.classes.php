@@ -1028,6 +1028,16 @@ class crtmlA extends crtmlBODYcontainer
  */
 class crtmlFORM extends crtmlBODYcontainer  
 {
+	
+	/**
+	 * Especifiquem si coloquem el tag del formulari
+	 * o únticament el contingut.
+	 * 
+	 * A la versió 5.3.2 com a mínim, no es permet passar
+	 * paràmetres al mètode __ToString
+	 */
+	protected $FormTag = true;
+	
 	/**
 	 * URL de l'agent que processarà el formulari, si no indiquem rés,
 	 * serà ell mateix.
@@ -1158,13 +1168,26 @@ class crtmlFORM extends crtmlBODYcontainer
 			$this->Continguts[] = $Contingut;
 		}
 	}
+	
+	
+	/**
+	 * Establim el valor de la propietat FormTag
+	 *
+	 * @param $FormTag string
+	 */
+	public function setFormTag($FormTag)
+	{
+		$this->FormTag = $FormTag;
+	}
+	
+	
 
 	/**
 	 * Renderitzem el formulari
 	 *
 	 * @return string
 	 */
-	function __toString($formtag = true)
+	function __toString()
 	{
 		/**
 		 * Iniciem l'element amb els paràmetres obligatoris i els
@@ -1172,7 +1195,7 @@ class crtmlFORM extends crtmlBODYcontainer
 		 */
 		$return = "";
 		
-		if ($formtag) {
+		if ($this->FormTag) {
 			$return = "\t<form action=\"$this->Action\"";
 
 			
@@ -1218,7 +1241,7 @@ class crtmlFORM extends crtmlBODYcontainer
 		 */
 		$return .= $this->insereixContinguts();
 		
-		if ($formtag) {
+		if ($this->FormTag) {
 			$return .= "\n\t</form>\n";
 		}
 		

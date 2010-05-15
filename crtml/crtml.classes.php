@@ -185,7 +185,8 @@ abstract class crtmlBODYelement
 		}
 		else 
 		{
-			throw new crtmlException("Event <b>$event</b> not found.");
+			//throw new crtmlException("Event <b>$event</b> not found.");
+			trigger_error("Event <b>$event</b> not found.", E_USER_ERROR);
 		}
 		
 	}
@@ -319,7 +320,9 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 			if (!isset($this->restrictConts[$tipus]))
 			{
 				$orig = get_class($this);
-				throw new crtmlException("$orig Container can't addContingut objects type <b>$tipus</b>.");
+				//throw new crtmlException("$orig Container can't addContingut objects type <b>$tipus</b>.");
+				trigger_error("$orig Container can't addContingut objects type <b>$tipus</b>.", E_USER_ERROR);
+				
 			}
 			
 		}
@@ -451,7 +454,9 @@ class crtmlP extends crtmlBODYcontainer
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Align <b>$Align</b> not found.");
+					
+					//throw new crtmlException("Align <b>$Align</b> not found.");
+					trigger_error("Align <b>$Align</b> not found.", E_USER_ERROR);
 					break;
 			}		
 
@@ -704,7 +709,8 @@ class crtmlIMG extends crtmlBODYelement
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Align <b>$Align</b> not found.");
+					//throw new crtmlException("Align <b>$Align</b> not found.");
+					trigger_error("Align <b>$Align</b> not found.", E_USER_ERROR);
 					break;
 			}		
 
@@ -781,14 +787,16 @@ class crtmlIMG extends crtmlBODYelement
 		 		break;
 		 		
 		 		default:
-		 			throw new Exception("crtmlIMG::resize($mida, $HV) Parameter HV not recognized. Must be H for horitzontal and V for vertical.");
+		 			//throw new Exception("crtmlIMG::resize($mida, $HV) Parameter HV not recognized. Must be H for horitzontal and V for vertical.");
+		 			trigger_error("crtmlIMG::resize($mida, $HV) Parameter HV not recognized. Must be H for horitzontal and V for vertical.", E_USER_ERROR);
 		 		break;
 		 	}
 		 	
 		 }
 		 else
 		 {
-		 	throw new Exception("crtmlIMG::resize($mida, $HV) Can't resize image without Height and Width properties.");
+		 	//throw new Exception("crtmlIMG::resize($mida, $HV) Can't resize image without Height and Width properties.");
+		 	trigger_error("crtmlIMG::resize($mida, $HV) Can't resize image without Height and Width properties.", E_USER_ERROR);
 		 }
 	}
 		
@@ -1316,7 +1324,8 @@ class crtmlLEGEND extends crtmlBODYelement
 				 * Si no és cap dels events permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Align <b>$Align</b> not found.");
+					//throw new crtmlException("Align <b>$Align</b> not found.");
+					trigger_error("Align <b>$Align</b> not found.", E_USER_ERROR);
 					break;
 			}		
 
@@ -1521,7 +1530,8 @@ class crtmlBUTTON extends crtmlBODYcontainer
 				 * Si no és cap dels tipus permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Button type <b>$Type</b> no valid.");
+					//throw new crtmlException("Button type <b>$Type</b> no valid.");
+					trigger_error("Button type <b>$Type</b> no valid.", E_USER_ERROR);
 					break;
 			}		
 		
@@ -2351,7 +2361,8 @@ class crtmlINPUT extends crtmlBODYelement
 				 * Si no és cap dels tipus permesos, donem un error fatal.
 				 */
 				default:
-					throw new crtmlException("Input type <b>$Type</b> no valid.");
+					//throw new crtmlException("Input type <b>$Type</b> no valid.");
+					trigger_error("Input type <b>$Type</b> no valid.", E_USER_ERROR);
 					break;
 			}		
 		
@@ -3508,7 +3519,8 @@ class crtmlBODY extends crtmlBODYcontainer
 		}
 		else 
 		{
-			throw new crtmlException("Event <b>$event</b> not found.");
+			//throw new crtmlException("Event <b>$event</b> not found.");
+			trigger_error("Event <b>$event</b> not found.", E_USER_ERROR);
 		}
 		
 	}
@@ -3940,7 +3952,8 @@ class crtmlTHEAD extends crtmlBODYcontainer
 			 */
 			default:
 				$orig = get_class($this);
-				throw new crtmlException("$orig VAlign type <b>$Valign</b> no valid.");
+				//throw new crtmlException("$orig VAlign type <b>$Valign</b> no valid.");
+				trigger_error("$orig VAlign type <b>{$Valign}</b> no valid.", E_USER_ERROR);
 				break;
 		}		
 		
@@ -3966,7 +3979,8 @@ class crtmlTHEAD extends crtmlBODYcontainer
 			 */
 			default:
 				$orig = get_class($this);
-				throw new crtmlException("$orig Align type <b>$Align</b> no valid.");
+				//throw new crtmlException("$orig Align type <b>$Align</b> no valid.");
+				trigger_error("{$orig} Align type <b>{$Align}</b> no valid.", E_USER_ERROR);
 				break;
 		}		
 

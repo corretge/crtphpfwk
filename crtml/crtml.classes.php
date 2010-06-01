@@ -3100,7 +3100,7 @@ class crtmlMETA
 			$return .= " SCHEME=\"$this->scheme\"";
 		}	
 		
-		$return .= " >";
+		$return .= " >\n";
 		
 		return $return;
 	}

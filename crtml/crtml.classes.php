@@ -3567,6 +3567,11 @@ class crtmlHTML
 	protected $body;
 	
 	/**
+	 * @var string
+	 */
+	protected $htmlTypes = array();
+	
+	/**
 	 * Conté el tipus de document
 	 *
 	 * @var unknown_type
@@ -3578,6 +3583,18 @@ class crtmlHTML
 	{
 		$this->set_docType($docType);
 	}
+	
+	/**
+	 * afegim tipus especials a la definicio del tag HTML
+	 * 
+	 * @param string $type
+	 * @param string $val
+	 */
+	public function add_htmlTypes($type, $val)
+	{
+		$this->htmlTypes[$type] = $val;		
+	}
+	
 	
 	/**
 	 * Assignem un valor a $docType
@@ -3644,7 +3661,20 @@ class crtmlHTML
 		}
 
 		
-		$return .= "<HTML>\n";
+		$return .= "<HTML";
+		
+		/**
+		 * controlem si ens han afegit algun tipus especial.
+		 */
+		if (count($this->htmlTypes) > 0)
+		{
+			foreach ($this->htmlTypes as $type => $val) 
+			{
+				$return .= " {$type}=\"{$val}\"\n";
+			}
+		}
+		
+		$return .= ">\n";
 
 		if (is_object($this->head))
 		{

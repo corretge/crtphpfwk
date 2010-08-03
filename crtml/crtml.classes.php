@@ -1,9 +1,10 @@
 <?php
 /**
- * Conjunt de classes que defineixen els objectes HTML que es fan servir quan es pinta una plana.
+ * Conjunt de classes que defineixen els objectes HTML que es fan servir quan
+ * es pinta una plana.
  * 
- * Les propietats dels objectes seran els atributs de l'entitat HTML a renderitzar.
- * Més informació:
+ * Les propietats dels objectes seran els atributs de l'entitat HTML a
+ * renderitzar. Més informació:
  * @link http://www.w3.org/TR/html401/#minitoc
  *  
  * @author Àlex Corretgé <alex@corretge.cat>
@@ -13,6 +14,10 @@
 
 /**
  * preparem una excepció crtml
+ * 
+ * @author Àlex Corretgé <alex@corretge.cat>
+ * @version 2.0
+ * @package crtml
  */
 class crtmlException extends Exception { }
 
@@ -46,21 +51,23 @@ abstract class crtmlBODYelement
 	 * Indiquem els events que s'han d'executar.
 	 *
 	 * Els events vàlids són:
-	 * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup
-	 * Algunes entitats tenen més events possibles que s'afegeixen en el constructor.
+	 * onclick, ondblclick, onmousedown, onmouseup, onmouseover,
+         * onmousemove, onmouseout, onkeypress, onkeydown, onkeyup
+	 * Algunes entitats tenen més events possibles que s'afegeixen en
+         * el constructor.
 	 * 
 	 * @var Array
 	 */
-	protected $Events = Array(	'onclick' => "",
-								'ondblclick' => "",
-								'onmousedown' => "",
-								'onmouseup' => "",
-								'onmouseover' => "",
-								'onmousemove' => "",
-								'onmouseout' => "",
-								'onkeypress' => "",
-								'onkeydown' => "",
-								'onkeyup' => "");
+	protected $Events = Array('onclick' => "",
+            'ondblclick' => "",
+            'onmousedown' => "",
+            'onmouseup' => "",
+            'onmouseover' => "",
+            'onmousemove' => "",
+            'onmouseout' => "",
+            'onkeypress' => "",
+            'onkeydown' => "",
+            'onkeyup' => "");
 	
 	/**
 	 * Identifiquem l'ID de l'entitat
@@ -68,7 +75,11 @@ abstract class crtmlBODYelement
 	 * @var string
 	 */
 	protected $Id;
-	
+
+        /**
+         * Propietat per a l'atribut Name
+         * @var string
+         */
 	protected $Name;
 	
 	/**
@@ -355,7 +366,12 @@ abstract class crtmlBODYcontainer extends crtmlBODYelement
 		}
 	}
 	
-	
+
+        /**
+         * Passem els Continguts a string
+         * 
+         * @return string
+         */
 	public function insereixContinguts()
 	{
 		$return = "";
@@ -586,7 +602,12 @@ class crtmlIMG extends crtmlBODYelement
 	 * @var int
 	 */
 	protected $VSpace;
-	
+
+        /**
+         * Propietat per a l'atribut tabindex
+         *
+         * @var int
+         */
 	protected $TabIndex;
 	
 	/**
@@ -759,17 +780,33 @@ class crtmlIMG extends crtmlBODYelement
 	{
 		$this->TabIndex = $TabIndex;
 	}
-	
+
+        /**
+         * Recupera alçada imatge
+         *
+         * @return int
+         */
 	public function getHeight()
 	{
 		return intval($this->Height);
 	}
-	
+
+        /**
+         * Recupera amplada imatge
+         *
+         * @return int
+         */
 	public function getWidth()
 	{
 		return intval($this->Width);
 	}
-	
+
+        /**
+         * Resize de la imatge proporcional
+         *
+         * @param integer $mida nova mida
+         * @param string $HV que mana horitzontal o vertical?
+         */
 	function resize($mida, $HV = "H")
 	{
 		if ($this->Height != '' and $this->Height != 0
@@ -801,17 +838,21 @@ class crtmlIMG extends crtmlBODYelement
 	}
 		
 	/**
-	 * Renderitzem la imatge
+	 * Renderitzem l'etiqueta de la imatge
 	 *
 	 * @return string
 	 */
 	function __toString()
 	{
 		/**
-		 * Iniciem l'objecte HTML amb els paràmetres obligatoris segons W3C si fos el cas.
+		 * Iniciem l'objecte HTML amb els atributs obligatoris
+                 * segons W3C si fos el cas.
 		 */
 		$return = "<img src=\"$this->Src\" alt=\"$this->Alt\"";
-		
+
+                /**
+                 * afegim els atributs pròpis de tot crtmlBODYelement
+                 */
 		$return .= parent::__toString();
 		
 		/**

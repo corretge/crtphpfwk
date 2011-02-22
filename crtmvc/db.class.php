@@ -123,6 +123,19 @@ class db
 	}
 
 	/**
+	 * Retornem el primer camp de la primera columna del resultat d'una sentència
+	 * 
+	 * @param string $sql
+	 * @return string
+	 */
+	public function getOne($sql)
+	{
+		$this->query($sql);
+		return current($this->fetchRow());
+
+	}
+
+	/**
 	 * Establim les credencials
 	 *
 	 * @param string $server  host

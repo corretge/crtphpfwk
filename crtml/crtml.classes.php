@@ -2335,6 +2335,14 @@ class crtmlINPUT extends crtmlBODYelement
 	 * @var string
 	 */
 	protected $Alt;
+
+
+	/**
+	 * Multiples arxius
+	 *
+	 * @var string
+	 */
+	protected $Multiple;
 	
 	/**
 	 * This attribute specifies the position of the current element in the tabbing order for the current document. 
@@ -2408,7 +2416,7 @@ class crtmlINPUT extends crtmlBODYelement
 			}		
 		
 	}
-	
+
 	/**
 	 * Establim Name
 	 *
@@ -2419,7 +2427,18 @@ class crtmlINPUT extends crtmlBODYelement
 	{
 		$this->Name = $Name;
 	}
-	
+
+	/**
+	 * Establim Multiple
+	 *
+	 * @param string $Multiple
+	 * @see $Multiple
+	 */
+	function setMultiple($Multiple)
+	{
+		$this->Multiple = $Multiple;
+	}
+
 	/**
 	 * Retornem el valor de la propietat Name
 	 * @return string
@@ -2636,7 +2655,15 @@ class crtmlINPUT extends crtmlBODYelement
 		{
 			$return .= " $this->Disabled";
 		}		
-		
+
+	/**
+		 * Si han indicat Multiple
+		 */
+		if (isset($this->Multiple))
+		{
+			$return .= " Multiple=\"{$this->Multiple}\"";
+		}
+
 		/**
 		 * Si han indicat Checked
 		 */
@@ -4299,5 +4326,3 @@ class crtmlLI extends crtmlBODYcontainer
 	}
 		
 }
-
-?>

@@ -20,6 +20,7 @@ class db
 	protected $lastSqlExecutat;
 	protected $lastId;
 	protected $lastInsertTable;
+  
 
 	public function __construct()
 	{
@@ -223,7 +224,7 @@ class db
 		{
 			if (!$this->silentMode)
 			{
-				throw new Exception("*ERR: {$err}");
+				throw new Exception("*ERR: {$err} <hr> {$this->lastSqlExecutat} <hr>");
 			}
 		}
 

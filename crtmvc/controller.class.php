@@ -189,6 +189,82 @@ class Controller
 		}
 	}
 
+	/**
+	 * Esbrina si existeix un controller per a la URL sol·licitada.
+	 */
+	static function instanciaController($caller = __FILE__, $default = 'Inici')
+	{
+		$AppPath = dirname($caller) . '/';
+
+		/**
+		 * Implementarem una heretabilitat de la vista per Path
+		 * si ens demanen Serveis/Optimització.html i no existeix
+		 * C/Serveis/Optimitzacio.php però sí que existexi
+		 * C/Serveis.php demanarem que s'instancii aquesta enlloc de saltar a
+		 * error i mostra la principal.
+		 */
+		$u = parse_url($_SERVER['REQUEST_URI']);
+		$u['path'] = str_replace('.html', '', $u['path']);
+		$au = explode('/', $u['path']);
+		/**
+		 * ens carreguem el primer element, que és sempre buit.
+		 */
+		unset($au[0]);
+
+		$n = count($au);
+
+		$ur = "";
+		/**
+		 * per seguretat ho limitem a 8 nivells
+		 */
+		if ($n > 8)
+		{
+			$n = 8;
+		}
+
+		/**
+		 * processem el path que ens ha arribat
+		 */
+		for ($i = $n; $i > 0; $i--)
+		{
+			/**
+			 * si existeix el controlador el carreguem
+			 */
+			$file = $AppPath . 'C/' . implode('/', $au) . '.php';
+			if (is_file($file))
+			{
+				require_once $file;
+				break;
+			}
+
+			/**
+			 * esborrem l'element que estavem processant.
+			 */
+			unset($au[$i]);
+		}
+
+		/**
+		 * trobem el nom de la classe controller per omissió si queda alguna cosa, si no,
+		 * el controlador base.
+		 */
+		if (empty($au))
+		{
+			$file = $AppPath . "C/{$default}.php";
+			require_once $file;
+			$class = $default;
+		}
+		else
+		{
+			$class = implode('_', $au);
+		}
+
+
+		/**
+		 * retornem el controlador instanciat
+		 */
+		return new $class($caller);
+	}
+
 }
 
 class DefaultController extends Controller

@@ -1,5 +1,7 @@
 <?php
 
+namespace Corretge\Crtmvc;
+
 /**
  * Base View for all pages
  *

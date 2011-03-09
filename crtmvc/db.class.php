@@ -1,5 +1,8 @@
 <?php
 
+namespace Corretge\Crtmvc\Model\MySQL;
+
+
 /*
  * Classe per a la connexió amb la base de dades.
  *

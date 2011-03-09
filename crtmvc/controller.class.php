@@ -1,5 +1,7 @@
 <?php
 
+namespace Corretge\Crtmvc;
+
 /**
  * Base Controller for all pages
  * Handles session management, GET/POST requests and response rendering
@@ -192,7 +194,7 @@ class Controller
 	/**
 	 * Esbrina si existeix un controller per a la URL sol·licitada.
 	 */
-	static function instanciaController($caller = __FILE__, $default = 'Inici')
+	static function instanciaController($caller = __FILE__, $namespace = __NAMESPACE__, $default = 'Inici')
 	{
 		$AppPath = dirname($caller) . '/';
 
@@ -251,11 +253,11 @@ class Controller
 		{
 			$file = $AppPath . "C/{$default}.php";
 			require_once $file;
-			$class = $default;
+			$class = "{$namespace}\\{$default}";
 		}
 		else
 		{
-			$class = implode('_', $au);
+			$class = "{$namespace}\\" . implode('_', $au);
 		}
 
 

@@ -95,7 +95,7 @@ class db
 			 */
 			if (is_resource($this->result))
 			{
-				$this->rows = new rows($this->result);
+				$this->rows = new \Corretge\Crtmvc\Model\MySQL\rows($this->result);
 			}
 			else
 			{

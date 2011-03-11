@@ -40,24 +40,24 @@ class db
 		 */
 		if ($persistent)
 		{
-			$this->conn = mysql_pconnect($this->server, $this->username, $this->password);
+			$this->conn = \mysql_pconnect($this->server, $this->username, $this->password);
 		}
 		else
 		{
 			//echo "mysql -h {$this->server} -u {$this->username} -p{$this->password}<br>";
-			$this->conn = mysql_connect($this->server, $this->username, $this->password);
+			$this->conn = \mysql_connect($this->server, $this->username, $this->password);
 		}
 
 		if (!$this->conn)
 		{
-			throw new Exception("*ERR can't connect to DB: " . mysql_error());
+			throw new Exception("*ERR can't connect to DB: " . \mysql_error());
 		}
 
 		/**
 		 * establim UTF8 com a codificació per omissió
 		 */
 		$this->lastSqlExecutat = 'SET NAMES utf8';
-		mysql_query('SET NAMES utf8', $this->conn);
+		\mysql_query('SET NAMES utf8', $this->conn);
 
 
 		/**
@@ -71,7 +71,7 @@ class db
 	 */
 	public function disconnect()
 	{
-		mysql_close($this->conn);
+		\mysql_close($this->conn);
 	}
 
 	/**
@@ -86,7 +86,7 @@ class db
 		 * creem rows, un iterable.
 		 */
 		$this->lastSqlExecutat = $sql;
-		if ($this->result = mysql_query($sql))
+		if ($this->result = \mysql_query($sql))
 		{
 
 			/**
@@ -106,7 +106,7 @@ class db
 		{
 			unset($this->rows);
 
-			if ($err = mysql_error($this->conn))
+			if ($err = \mysql_error($this->conn))
 			{
 				if (!$this->silentMode)
 				{
@@ -123,7 +123,7 @@ class db
 	 */
 	public function fetchRow()
 	{
-		return mysql_fetch_array($this->result, MYSQL_ASSOC);
+		return \mysql_fetch_array($this->result, \mysql_ASSOC);
 	}
 
 	/**
@@ -205,7 +205,7 @@ class db
 		{
 			if (is_string($val))
 			{
-				$valors[$key] = "'" . mysql_real_escape_string($val) . "'";
+				$valors[$key] = "'" . \mysql_real_escape_string($val) . "'";
 			}
 			elseif (is_null($val))
 			{
@@ -223,7 +223,7 @@ class db
 		$this->lastSqlExecutat = $sql;
 		mysql_query($sql);
 
-		if ($err = mysql_error($this->conn))
+		if ($err = \mysql_error($this->conn))
 		{
 			if (!$this->silentMode)
 			{
@@ -236,7 +236,7 @@ class db
 		 * el darrer uniqueId autonumèric (zero si no hi ha clau)
 		 * i guardem la darrera taula a la que es correspon aquest id.
 		 */
-		$this->lastId = mysql_insert_id();
+		$this->lastId = \mysql_insert_id();
 		$this->lastInsertTable = $taula;
 	}
 
@@ -266,7 +266,7 @@ class db
 			}
 			elseif (is_string($val))
 			{
-				$sql .= " {$key} = '" . mysql_real_escape_string($val) . "'";
+				$sql .= " {$key} = '" . \mysql_real_escape_string($val) . "'";
 			}
 			elseif (is_null($val))
 			{
@@ -274,7 +274,7 @@ class db
 			}
 			else
 			{
-				$sql .= " {$key} = " . mysql_real_escape_string($val);
+				$sql .= " {$key} = " . \mysql_real_escape_string($val);
 			}
 			$sep = ", ";
 		}
@@ -288,7 +288,7 @@ class db
 				$sql .= $sep;
 				if (is_string($val))
 				{
-					$sql .= " {$key} = '" . mysql_real_escape_string($val) . "'";
+					$sql .= " {$key} = '" . \mysql_real_escape_string($val) . "'";
 				}
 				elseif (is_null($val))
 				{
@@ -296,7 +296,7 @@ class db
 				}
 				else
 				{
-					$sql .= " {$key} = " . mysql_real_escape_string($val);
+					$sql .= " {$key} = " . \mysql_real_escape_string($val);
 				}
 				$sep = " AND ";
 			}
@@ -305,7 +305,7 @@ class db
 		$this->lastSqlExecutat = $sql;
 		mysql_query($sql);
 
-		if ($err = mysql_error($this->conn))
+		if ($err = \mysql_error($this->conn))
 		{
 			if (!$this->silentMode)
 			{
@@ -329,7 +329,7 @@ class db
 /**
  * Processem els registres d'una consulta
  */
-class rows implements Iterator
+class rows implements \Iterator
 {
 
 	private $pos = 0;
@@ -342,7 +342,7 @@ class rows implements Iterator
 	{
 		$this->result = $result;
 		$this->pos = 0;
-		$this->numRows = mysql_num_rows($result);
+		$this->numRows = \mysql_num_rows($result);
 	}
 
 	public function rewind()
@@ -350,13 +350,13 @@ class rows implements Iterator
 		$this->pos = 0;
 		if ($this->numRows > 0)
 		{
-			$this->valid = mysql_data_seek($this->result, $this->pos);
+			$this->valid = \mysql_data_seek($this->result, $this->pos);
 		}
 	}
 
 	public function current()
 	{
-		$this->row = mysql_fetch_assoc($this->result);
+		$this->row = \mysql_fetch_assoc($this->result);
 		return $this->row;
 	}
 
@@ -374,7 +374,7 @@ class rows implements Iterator
 		}
 		else
 		{
-			$this->valid = mysql_data_seek($this->result, $this->pos);
+			$this->valid = \mysql_data_seek($this->result, $this->pos);
 		}
 	}
 

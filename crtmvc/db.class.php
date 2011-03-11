@@ -123,7 +123,7 @@ class db
 	 */
 	public function fetchRow()
 	{
-		return \mysql_fetch_array($this->result, mysql_ASSOC);
+		return \mysql_fetch_array($this->result, MYSQL_ASSOC);
 	}
 
 	/**

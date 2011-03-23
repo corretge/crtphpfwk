@@ -12,7 +12,7 @@
  * @param string $name
  * @return string
  */
-function rtv_var_dump($var, $name = false)
+function rtv_var_dump($var, $name = false, $pre = false)
 {
 	/**
 	 * iniciem la captura del buffer de sortida
@@ -31,6 +31,11 @@ function rtv_var_dump($var, $name = false)
 	{
 		$return = $name . " = " . $return;
 	}
+
+  if ($pre)
+  {
+    $return = "<pre>{$return}</pre>";
+  }
 	
 	return $return;
 }

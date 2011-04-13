@@ -126,6 +126,9 @@ class db
 		return \mysql_fetch_array($this->result, MYSQL_ASSOC);
 	}
 
+  /**
+   *
+   */
 	/**
 	 * Retornem el primer camp de la primera columna del resultat d'una sentència
 	 * 

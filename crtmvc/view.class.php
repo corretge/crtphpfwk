@@ -15,10 +15,12 @@ namespace Corretge\Crtmvc;
 class View {
 	const RENDER_ACTION = 'render';
 	const REDIRECT_ACTION = 'redirect';
+  const XMLDOM_ACTION = 'xmldom';
 
 	protected $Url;
 	public $Val;
 	protected $Action;
+  
 
 	public function __construct($url, $val=array(), $action=View::RENDER_ACTION) {
 		

@@ -2,7 +2,6 @@
 
 namespace Corretge\Crtmvc\Model\MySQL;
 
-
 /*
  * Classe per a la connexió amb la base de dades.
  *
@@ -12,320 +11,333 @@ namespace Corretge\Crtmvc\Model\MySQL;
 class db
 {
 
-	protected $server;
-	protected $username;
-	protected $password;
-	protected $database;
-	public $conn;
-	public $rows;
-	public $result;
-	protected $silentMode = false;
-	protected $lastSqlExecutat;
-	protected $lastId;
-	protected $lastInsertTable;
-  
+  protected $server;
+  protected $username;
+  protected $password;
+  protected $database;
+  public $conn;
+  public $rows;
+  public $result;
+  public $stmt;
+  protected $silentMode = false;
+  protected $lastSqlExecutat;
+  protected $lastBindExecutat;
+  protected $lastId;
+  protected $lastInsertTable;
 
-	public function __construct()
-	{
-		
-	}
+  public function __construct()
+  {
+    
+  }
 
-	/**
-	 * ens connectem a la base de dades.
-	 */
-	public function connect($persistent = false)
-	{
-		/**
-		 * si demanen connexió persistent, ho fem.
-		 */
-		if ($persistent)
-		{
-			$this->conn = \mysql_pconnect($this->server, $this->username, $this->password);
-		}
-		else
-		{
-			//echo "mysql -h {$this->server} -u {$this->username} -p{$this->password}<br>";
-			$this->conn = \mysql_connect($this->server, $this->username, $this->password);
-		}
+  /**
+   * ens connectem a la base de dades.
+   */
+  public function connect($persistent = false)
+  {
+    /**
+     * si demanen connexió persistent, ho fem.
+     */
+    if ($persistent)
+    {
+      $this->conn = \mysql_pconnect($this->server, $this->username, $this->password);
+    }
+    else
+    {
+      //echo "mysql -h {$this->server} -u {$this->username} -p{$this->password}<br>";
+      $this->conn = \mysql_connect($this->server, $this->username, $this->password);
+    }
 
-		if (!$this->conn)
-		{
-			throw new Exception("*ERR can't connect to DB: " . \mysql_error());
-		}
+    if (!$this->conn)
+    {
+      throw new Exception("*ERR can't connect to DB: " . \mysql_error());
+    }
 
-		/**
-		 * establim UTF8 com a codificació per omissió
-		 */
-		$this->lastSqlExecutat = 'SET NAMES utf8';
-		\mysql_query('SET NAMES utf8', $this->conn);
+    /**
+     * establim UTF8 com a codificació per omissió
+     */
+    $this->lastSqlExecutat = 'SET NAMES utf8';
+    \mysql_query('SET NAMES utf8', $this->conn);
 
 
-		/**
-		 * emprem la base de dades per omissió
-		 */
-		$this->useDb($this->database);
-	}
+    /**
+     * emprem la base de dades per omissió
+     */
+    $this->useDb($this->database);
+  }
 
-	/**
-	 * tanquem la connexió amb la base de dades.
-	 */
-	public function disconnect()
-	{
-		\mysql_close($this->conn);
-	}
+  /**
+   * tanquem la connexió amb la base de dades.
+   */
+  public function disconnect()
+  {
+    \mysql_close($this->conn);
+  }
 
-	/**
-	 * Executem una consulta
-	 *
-	 * @param string $sql
-	 */
-	public function query($sql)
-	{
-		/**
-		 * si el query s'executa satisfactòriament,
-		 * creem rows, un iterable.
-		 */
-		$this->lastSqlExecutat = $sql;
-		if ($this->result = \mysql_query($sql))
-		{
+  /**
+   * Executem una consulta
+   *
+   * @param string $sql
+   */
+  public function query($sql)
+  {
+    /**
+     * si el query s'executa satisfactòriament,
+     * creem rows, un iterable.
+     */
+    $this->lastSqlExecutat = $sql;
 
-			/**
-			 * preguntem si és un recurs, doncs pot ser un Insert
-			 * satisfactori que no retorna resultat.
-			 */
-			if (is_resource($this->result))
-			{
-				$this->rows = new \Corretge\Crtmvc\Model\MySQL\rows($this->result);
-			}
-			else
-			{
-				unset($this->rows);
-			}
-		}
-		else
-		{
-			unset($this->rows);
+    $this->result = \mysql_query($sql);
+    if ($this->result)
+    {
 
-			if ($err = \mysql_error($this->conn))
-			{
-				if (!$this->silentMode)
-				{
-					throw new Exception("*ERR: {$err}");
-				}
-			}
-		}
-	}
+      /**
+       * preguntem si és un recurs, doncs pot ser un Insert
+       * satisfactori que no retorna resultat.
+       */
+      if (is_resource($this->result))
+      {
+        $this->rows = new \Corretge\Crtmvc\Model\MySQL\rows($this->result);
+        return $this->rows;
+      }
+      else
+      {
+        unset($this->rows);
+      }
+    }
+    else
+    {
+      unset($this->rows);
 
-	/**
-	 * Recuperem un registre
-	 *
-	 * @return array
-	 */
-	public function fetchRow()
-	{
-		return \mysql_fetch_array($this->result, MYSQL_ASSOC);
-	}
+      if ($err = \mysql_error($this->conn))
+      {
+        if (!$this->silentMode)
+        {
+          throw new \Exception("*ERR: {$err}");
+        }
+      }
+    }
+  }
+
+  /**
+   * Recuperem un registre
+   *
+   * @return array
+   */
+  public function fetchRow()
+  {
+    return \mysql_fetch_array($this->result, MYSQL_ASSOC);
+  }
 
   /**
    *
    */
-	/**
-	 * Retornem el primer camp de la primera columna del resultat d'una sentència
-	 * 
-	 * @param string $sql
-	 * @return string
-	 */
-	public function getOne($sql)
-	{
-		$this->query($sql);
-		return current($this->fetchRow());
 
-	}
+  /**
+   * Retornem el primer camp de la primera columna del resultat d'una sentència
+   *
+   * @param string $sql
+   * @return string
+   */
+  public function getOne($sql)
+  {
+    $this->query($sql);
 
-	/**
-	 * Establim les credencials
-	 *
-	 * @param string $server  host
-	 * @param string $user user
-	 * @param string $password password
-	 * @param boolean $base64  password base64 encoded
-	 */
-	public function setCredentials($server, $user, $password, $base64 = false)
-	{
-		$this->server = $server;
-		$this->username = $user;
-		if ($base64)
-		{
-			$this->password = base64_decode($password);
-		}
-		else
-		{
-			$this->password = $password;
-		}
-	}
+    $ret = $this->fetchRow();
+    if (is_array($ret))
+    {
+      return current($ret);
+    }
+    else
+    {
+      return $ret;
+    }
+  }
 
-	public function useDb($db)
-	{
+  /**
+   * Establim les credencials
+   *
+   * @param string $server  host
+   * @param string $user user
+   * @param string $password password
+   * @param boolean $base64  password base64 encoded
+   */
+  public function setCredentials($server, $user, $password, $base64 = false)
+  {
+    $this->server = $server;
+    $this->username = $user;
+    if ($base64)
+    {
+      $this->password = base64_decode($password);
+    }
+    else
+    {
+      $this->password = $password;
+    }
+  }
 
-		mysql_select_db($db, $this->conn);
-		$this->database = $db;
-	}
+  public function useDb($db)
+  {
 
-	/**
-	 * Indiquem si volem continui encara que hi hagi errors o que salti.
-	 *
-	 * @param bool $mode
-	 */
-	public function setSilentMode($mode)
-	{
-		$this->silentMode = ($mode === true);
-	}
+    mysql_select_db($db, $this->conn);
+    $this->database = $db;
+  }
 
-	/**
-	 * Creem un registre
-	 * @param string $taula
-	 * @param array $valors Array associativa amb el nom de camp i valors
-	 */
-	public function insertInto($taula, $valors, $delayed = false)
-	{
-		$sql = "insert ";
+  /**
+   * Indiquem si volem continui encara que hi hagi errors o que salti.
+   *
+   * @param bool $mode
+   */
+  public function setSilentMode($mode)
+  {
+    $this->silentMode = ($mode === true);
+  }
 
-		if ($delayed)
-		{
-			$sql .= "delayed ";
-		}
+  /**
+   * Creem un registre
+   * @param string $taula
+   * @param array $valors Array associativa amb el nom de camp i valors
+   */
+  public function insertInto($taula, $valors, $delayed = false)
+  {
+    $sql = "insert ";
 
-		$sql .= "into {$taula} (";
+    if ($delayed)
+    {
+      $sql .= "delayed ";
+    }
 
-		$sql .= implode(', ', array_keys($valors));
+    $sql .= "into {$taula} (";
 
-		$sql .= ") VALUES(";
+    $sql .= implode(', ', array_keys($valors));
 
-		/**
-		 * preprocessem els valors
-		 */
-		foreach ($valors as $key => $val)
-		{
-			if (is_string($val))
-			{
-				$valors[$key] = "'" . \mysql_real_escape_string($val) . "'";
-			}
-			elseif (is_null($val))
-			{
-				$valors[$key] = "null";
-			}
-		}
+    $sql .= ") VALUES(";
 
-		/**
-		 * i els afegim a la sentència
-		 */
-		$sql .= implode(',', $valors);
+    /**
+     * preprocessem els valors
+     */
+    foreach ($valors as $key => $val)
+    {
+      if (is_string($val))
+      {
+        $valors[$key] = "'" . \mysql_real_escape_string($val) . "'";
+      }
+      elseif (is_null($val))
+      {
+        $valors[$key] = "null";
+      }
+    }
 
-		$sql .= ")";
+    /**
+     * i els afegim a la sentència
+     */
+    $sql .= implode(',', $valors);
 
-		$this->lastSqlExecutat = $sql;
-		mysql_query($sql);
+    $sql .= ")";
 
-		if ($err = \mysql_error($this->conn))
-		{
-			if (!$this->silentMode)
-			{
-				throw new Exception("*ERR: {$err} <hr> {$this->lastSqlExecutat} <hr>");
-			}
-		}
+    $this->lastSqlExecutat = $sql;
+    mysql_query($sql);
 
-		/**
-		 * si la inserció ha anat bé, recuperem
-		 * el darrer uniqueId autonumèric (zero si no hi ha clau)
-		 * i guardem la darrera taula a la que es correspon aquest id.
-		 */
-		$this->lastId = \mysql_insert_id();
-		$this->lastInsertTable = $taula;
-	}
+    if ($err = \mysql_error($this->conn))
+    {
+      if (!$this->silentMode)
+      {
+        throw new Exception("*ERR: {$err} <hr> {$this->lastSqlExecutat} <hr>");
+      }
+    }
 
-	/**
-	 * Actualitzem un registre
-	 * @param string $taula
-	 * @param array $valors Array associativa amb el nom de camp i valors
-	 * @param array $clau Array amb la clau complerta
-	 */
-	public function update($taula, $valors, $clau = null)
-	{
-		$sql = "update ";
+    /**
+     * si la inserció ha anat bé, recuperem
+     * el darrer uniqueId autonumèric (zero si no hi ha clau)
+     * i guardem la darrera taula a la que es correspon aquest id.
+     */
+    $this->lastId = \mysql_insert_id();
+    $this->lastInsertTable = $taula;
+  }
+
+  /**
+   * Actualitzem un registre
+   * @param string $taula
+   * @param array $valors Array associativa amb el nom de camp i valors
+   * @param array $clau Array amb la clau complerta
+   */
+  public function update($taula, $valors, $clau = null)
+  {
+    $sql = "update ";
 
 
-		$sql .= " {$taula} SET ";
+    $sql .= " {$taula} SET ";
 
-		/**
-		 * carreguem els valors
-		 */
-		$sep = "";
-		foreach ($valors as $key => $val)
-		{
-			$sql .= $sep;
-			if ($val instanceof dbSentence)
-			{
-				$sql .= " {$key} = {$val}";
-			}
-			elseif (is_string($val))
-			{
-				$sql .= " {$key} = '" . \mysql_real_escape_string($val) . "'";
-			}
-			elseif (is_null($val))
-			{
-				$sql .= " {$key} = null";
-			}
-			else
-			{
-				$sql .= " {$key} = " . \mysql_real_escape_string($val);
-			}
-			$sep = ", ";
-		}
+    /**
+     * carreguem els valors
+     */
+    $sep = "";
+    foreach ($valors as $key => $val)
+    {
+      $sql .= $sep;
+      if ($val instanceof dbSentence)
+      {
+        $sql .= " {$key} = {$val}";
+      }
+      elseif (is_string($val))
+      {
+        $sql .= " {$key} = '" . \mysql_real_escape_string($val) . "'";
+      }
+      elseif (is_null($val))
+      {
+        $sql .= " {$key} = null";
+      }
+      else
+      {
+        $sql .= " {$key} = " . \mysql_real_escape_string($val);
+      }
+      $sep = ", ";
+    }
 
-		if (isset($clau) and is_array($clau))
-		{
-			$sql .= " WHERE ";
-			$sep = "";
-			foreach ($clau as $key => $val)
-			{
-				$sql .= $sep;
-				if (is_string($val))
-				{
-					$sql .= " {$key} = '" . \mysql_real_escape_string($val) . "'";
-				}
-				elseif (is_null($val))
-				{
-					$sql .= " isnull({$key}) ";
-				}
-				else
-				{
-					$sql .= " {$key} = " . \mysql_real_escape_string($val);
-				}
-				$sep = " AND ";
-			}
-		}
+    if (isset($clau) and is_array($clau))
+    {
+      $sql .= " WHERE ";
+      $sep = "";
+      foreach ($clau as $key => $val)
+      {
+        $sql .= $sep;
+        if (is_string($val))
+        {
+          $sql .= " {$key} = '" . \mysql_real_escape_string($val) . "'";
+        }
+        elseif (is_null($val))
+        {
+          $sql .= " isnull({$key}) ";
+        }
+        else
+        {
+          $sql .= " {$key} = " . \mysql_real_escape_string($val);
+        }
+        $sep = " AND ";
+      }
+    }
 
-		$this->lastSqlExecutat = $sql;
-		mysql_query($sql);
+    $this->lastSqlExecutat = $sql;
+    mysql_query($sql);
 
-		if ($err = \mysql_error($this->conn))
-		{
-			if (!$this->silentMode)
-			{
-				throw new Exception("*ERR: {$err}");
-			}
-		}
-	}
+    if ($err = \mysql_error($this->conn))
+    {
+      if (!$this->silentMode)
+      {
+        throw new Exception("*ERR: {$err}");
+      }
+    }
+  }
 
-	public function getLastSqlExecutat()
-	{
-		return $this->lastSqlExecutat;
-	}
+  public function getLastSqlExecutat()
+  {
+    return $this->lastSqlExecutat;
+  }
 
-	public function getLastId()
-	{
-		return $this->lastId;
-	}
+  public function getLastId()
+  {
+    return $this->lastId;
+  }
 
 }
 
@@ -335,66 +347,66 @@ class db
 class rows implements \Iterator
 {
 
-	private $pos = 0;
-	private $result;
-	private $row;
-	private $valid;
-	private $numRows;
+  private $pos = 0;
+  private $result;
+  private $row;
+  private $valid;
+  private $numRows;
 
-	public function __construct($result)
-	{
-		$this->result = $result;
-		$this->pos = 0;
-		$this->numRows = \mysql_num_rows($result);
-	}
+  public function __construct($result)
+  {
+    $this->result = $result;
+    $this->pos = 0;
+    $this->numRows = \mysql_num_rows($result);
+  }
 
-	public function rewind()
-	{
-		$this->pos = 0;
-		if ($this->numRows > 0)
-		{
-			$this->valid = \mysql_data_seek($this->result, $this->pos);
-		}
-	}
+  public function rewind()
+  {
+    $this->pos = 0;
+    if ($this->numRows > 0)
+    {
+      $this->valid = \mysql_data_seek($this->result, $this->pos);
+    }
+  }
 
-	public function current()
-	{
-		$this->row = \mysql_fetch_assoc($this->result);
-		return $this->row;
-	}
+  public function current()
+  {
+    $this->row = \mysql_fetch_assoc($this->result);
+    return $this->row;
+  }
 
-	public function key()
-	{
-		return $this->pos;
-	}
+  public function key()
+  {
+    return $this->pos;
+  }
 
-	public function next()
-	{
-		++$this->pos;
-		if ($this->pos >= $this->numRows)
-		{
-			$this->valid = false;
-		}
-		else
-		{
-			$this->valid = \mysql_data_seek($this->result, $this->pos);
-		}
-	}
+  public function next()
+  {
+    ++$this->pos;
+    if ($this->pos >= $this->numRows)
+    {
+      $this->valid = false;
+    }
+    else
+    {
+      $this->valid = \mysql_data_seek($this->result, $this->pos);
+    }
+  }
 
-	function valid()
-	{
-		return $this->valid;
-	}
+  function valid()
+  {
+    return $this->valid;
+  }
 
-	public function getNumRows()
-	{
-		return $this->numRows;
-	}
+  public function getNumRows()
+  {
+    return $this->numRows;
+  }
 
-	public function getRow()
-	{
-		return $this->row;
-	}
+  public function getRow()
+  {
+    return $this->row;
+  }
 
 }
 
@@ -405,40 +417,40 @@ class rows implements \Iterator
 class dbSentence
 {
 
-	/**
-	 *
-	 * @var string Sentencia SQL o funció
-	 */
-	protected $stmt;
+  /**
+   *
+   * @var string Sentencia SQL o funció
+   */
+  protected $stmt;
 
-	/**
-	 * Construim un dbSentence
-	 * @param string $stmt Sentencia SQL o funció
-	 */
-	public function __construct($stmt)
-	{
-		$this->setSentence($stmt);
-	}
+  /**
+   * Construim un dbSentence
+   * @param string $stmt Sentencia SQL o funció
+   */
+  public function __construct($stmt)
+  {
+    $this->setSentence($stmt);
+  }
 
-	/**
-	 * Establim la sentència.
-	 *
-	 * @param string $stmt Sentencia SQL o funcio
-	 */
-	public function setSentence($stmt)
-	{
-		$this->stmt = $stmt;
-	}
+  /**
+   * Establim la sentència.
+   *
+   * @param string $stmt Sentencia SQL o funcio
+   */
+  public function setSentence($stmt)
+  {
+    $this->stmt = $stmt;
+  }
 
-	/**
-	 * Retornem la sentència
-	 *
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return $this->stmt;
-	}
+  /**
+   * Retornem la sentència
+   *
+   * @return string
+   */
+  public function __toString()
+  {
+    return $this->stmt;
+  }
 
 }
 

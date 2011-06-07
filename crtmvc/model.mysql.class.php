@@ -224,7 +224,6 @@ and CONSTRAINT_NAME = 'PRIMARY'");
 
     try
     {
-      //var_dump($sql);
       return $this->db->query($sql);
     }
     catch (Exception $e)
